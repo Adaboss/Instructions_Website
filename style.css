@@ -26,10 +26,9 @@
     --secondary: #f472b6;
     --background: #111827;
     --surface: #1f2937;
-    --text-main: #f9fafb;
-    --text-muted: #9ca3af;
+    --text-main: #ffffff;
+    --text-muted: #d1d5db;
     --border: #374151;
-    --success: #10B981;
     --success-light: rgba(16, 185, 129, 0.2);
     --warning: #F59E0B;
     --warning-light: rgba(245, 158, 11, 0.2);
@@ -45,6 +44,7 @@
 
 body {
     font-family: 'Inter', sans-serif;
+    font-size: 1.125rem;
     background-color: var(--background);
     color: var(--text-main);
     line-height: 1.6;
@@ -79,20 +79,24 @@ body {
 }
 
 .theme-toggle {
-    background: transparent;
-    border: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
     color: var(--text-main);
     cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
+    padding: 8px 16px;
+    border-radius: 9999px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s, color 0.3s ease;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .theme-toggle:hover {
-    background-color: var(--border);
+    background-color: var(--background);
+    box-shadow: var(--shadow-md);
 }
 
 .hidden {
@@ -147,19 +151,6 @@ main {
     background: linear-gradient(to bottom, var(--primary), var(--primary-light));
 }
 
-.step-badge {
-    display: inline-block;
-    background: var(--primary-light);
-    color: white;
-    padding: 6px 16px;
-    border-radius: 9999px;
-    font-size: 0.875rem;
-    font-weight: 600;
-    margin-bottom: 16px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
 .step-card h2 {
     font-size: 1.75rem;
     margin-bottom: 24px;
@@ -182,7 +173,7 @@ main {
 }
 
 .sub-step {
-    background: #F9FAFB;
+    background: var(--background);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
@@ -390,7 +381,7 @@ code {
 .add-btn {
     width: 100%;
     padding: 12px;
-    background: #F9FAFB;
+    background: var(--background);
     border: 1px dashed var(--border);
     border-radius: 6px;
     color: var(--text-muted);

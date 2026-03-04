@@ -149,6 +149,7 @@ calculateTotals();
 const themeToggleBtn = document.getElementById('theme-toggle');
 const moonIcon = document.getElementById('moon-icon');
 const sunIcon = document.getElementById('sun-icon');
+const themeText = document.getElementById('theme-text');
 
 // Check for saved theme
 const savedTheme = localStorage.getItem('theme');
@@ -156,6 +157,7 @@ if (savedTheme === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
     moonIcon.classList.add('hidden');
     sunIcon.classList.remove('hidden');
+    if (themeText) themeText.textContent = 'Light Mode';
 }
 
 themeToggleBtn.addEventListener('click', () => {
@@ -165,29 +167,31 @@ themeToggleBtn.addEventListener('click', () => {
         localStorage.setItem('theme', 'light');
         moonIcon.classList.remove('hidden');
         sunIcon.classList.add('hidden');
+        if (themeText) themeText.textContent = 'Dark Mode';
     } else {
         document.documentElement.setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
         moonIcon.classList.add('hidden');
         sunIcon.classList.remove('hidden');
+        if (themeText) themeText.textContent = 'Light Mode';
     }
 });
 
 // --- Step 5 Financial Aid Calculator ---
 let costsItems = [
-    { id: generateId(), name: 'Tuition', amount: 34634 },
-    { id: generateId(), name: 'ECS Fee', amount: 400 },
-    { id: generateId(), name: 'Activity Fee', amount: 219 },
-    { id: generateId(), name: 'Health Fee', amount: 445 },
-    { id: generateId(), name: 'Communication Fee', amount: 280 }
+    { id: generateId(), name: 'Tuition', amount: 0 },
+    { id: generateId(), name: 'ECS Fee', amount: 0 },
+    { id: generateId(), name: 'Activity Fee', amount: 0 },
+    { id: generateId(), name: 'Health Fee', amount: 0 },
+    { id: generateId(), name: 'Communication Fee', amount: 0 }
 ];
 
 let aidItems = [
-    { id: generateId(), name: 'University Grant', amount: 30990 },
-    { id: generateId(), name: 'FDUL', amount: 1000 },
-    { id: generateId(), name: 'FDSL', amount: 2750 },
-    { id: generateId(), name: 'NYS TAP', amount: 1498 },
-    { id: generateId(), name: 'PELL Grant', amount: 3697.5 }
+    { id: generateId(), name: 'University Grant', amount: 0 },
+    { id: generateId(), name: 'FDUL', amount: 0 },
+    { id: generateId(), name: 'FDSL', amount: 0 },
+    { id: generateId(), name: 'NYS TAP', amount: 0 },
+    { id: generateId(), name: 'PELL Grant', amount: 0 }
 ];
 
 const costsListEl = document.getElementById('costs-list');

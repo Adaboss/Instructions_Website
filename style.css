@@ -711,22 +711,45 @@ footer {
 }
 
 /* Step 6 Debt Snowball Inputs Alignment */
+/* Headers */
+.sheet-headers {
+    display: flex;
+    gap: 12px;
+    font-weight: 600;
+    align-items: center;
+}
+
+.sheet-headers .col-name {
+    flex: 1; /* Loan Name header stretches */
+    text-align: left;
+}
+
+.sheet-headers .col-cost {
+    width: 120px; /* Balance, Interest Rate, Min Payment headers */
+    text-align: right;
+}
+
+.sheet-headers .col-action {
+    width: 40px; /* For delete button */
+}
+
+/* Inputs */
 #debt-list .sheet-item {
     display: flex;
     gap: 12px;
     align-items: center;
 }
 
-#debt-list .sheet-item input[type="text"] {
-    flex: 1; 
+#debt-list .sheet-item input.item-name {
+    flex: 1; /* Loan Name input stretches like header */
 }
 
-#debt-list .sheet-item input[type="number"] {
-    width: 130px;
-    text-align: right;
+#debt-list .sheet-item input.item-cost {
+    width: 120px; /* Inputs same width as headers */
+    text-align: right; /* Center numbers on right */
 }
 
 #debt-list .sheet-item button.del-btn {
-    width: 40px;
+    width: 30px;
     flex-shrink: 0;
 }

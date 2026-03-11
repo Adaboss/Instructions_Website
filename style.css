@@ -714,7 +714,7 @@ footer {
 /* Headers */
 .sheet-headers {
     display: flex;
-    gap: 16px;
+    gap: 26px;
     font-weight: 600;
     align-items: center;
 }

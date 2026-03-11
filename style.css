@@ -714,7 +714,7 @@ footer {
 /* Headers */
 .sheet-headers {
     display: flex;
-    gap: 35px;
+    gap: 200px;
     font-weight: 600;
     align-items: center;
 }
@@ -736,7 +736,7 @@ footer {
 /* Inputs */
 #debt-list .sheet-item {
     display: flex;
-    gap: 40px;
+    gap: 100px;
     align-items: center;
 }
 

@@ -12,6 +12,7 @@ let wants = [
     { id: 3, name: 'Subscriptions', cost: 25.0 }
 ];
 
+
 // Target percentages
 const TARGET_NEEDS = 0.65;
 const TARGET_WANTS = 0.25;
@@ -312,7 +313,9 @@ calculateAidTotals();
 
 
 // --- Step 6 Debt Snowball Calculator ---
-let debts = [];
+let debts = [
+    { name: '', balance: 0, rate: 0, minPayment: 0 }
+];
 
 const debtListEl = document.getElementById('debt-list');
 const totalDebtEl = document.getElementById('total-debt');
@@ -347,15 +350,15 @@ function renderDebtList() {
 
         row.innerHTML = `
             <input type="text" class="col-name" value="${item.name}" placeholder="Loan Name" onchange="updateDebtItem(${index}, 'name', this.value)">
-            <input type="number" class="col-balance" value="${item.balance}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'balance', this.value)">
-            <input type="number" class="col-rate" value="${item.rate}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'rate', this.value)">
-            <input type="number" class="col-payment" value="${item.minPayment}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'minPayment', this.value)">
-            <button class="col-action" onclick="removeDebtItem(${index})">✕</button>
+            <input type="number" class="col-cost" value="${item.balance}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'balance', this.value)">
+            <input type="number" class="col-cost" value="${item.rate}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'rate', this.value)">
+            <input type="number" class="col-cost" value="${item.minPayment}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'minPayment', this.value)">
+            <button class="del-btn" onclick="removeDebtItem(${index})">✕</button>
         `;
 
         container.appendChild(row);
     });
-
+    
     updateDebtTotals();
 }
 

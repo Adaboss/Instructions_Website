@@ -312,68 +312,64 @@ renderAidList('aid');
 calculateAidTotals();
 
 
-// --- Step 6 Debt Snowball Calculator ---
+
+// --- Step 6: Debt Snowball Calculator ---
 let debts = [
-    { name: '', balance: 0, rate: 0, minPayment: 0 }
+    { name: 'Credit Card', balance: 500, rate: 15, minPayment: 50 },
+    { name: 'Personal Loan', balance: 1500, rate: 5, minPayment: 100 }
 ];
 
 const debtListEl = document.getElementById('debt-list');
 const totalDebtEl = document.getElementById('total-debt');
 const totalPaymentsEl = document.getElementById('total-payments');
 
-window.addDebtItem = function() {
-    debts.push({ name: '', balance: 0, rate: 0, payment: 0 });
-    renderDebts();
-};
-
-window.removeDebt = function(index) {
-    debts.splice(index, 1);
-    renderDebts();
-};
-
-window.updateDebt = function(index, field, value) {
-    if (field === 'balance' || field === 'payment' || field === 'rate') {
-        debts[index][field] = parseFloat(value) || 0;
-    } else {
-        debts[index][field] = value;
-    }
-    updateDebtTotals();
-};
-
 function renderDebtList() {
-    const container = document.getElementById('debt-list');
-    container.innerHTML = '';
+    debtListEl.innerHTML = '';
 
     debts.forEach((item, index) => {
         const row = document.createElement('div');
         row.className = 'sheet-item';
 
         row.innerHTML = `
-            <input type="text" class="col-name" value="${item.name}" placeholder="Loan Name" onchange="updateDebtItem(${index}, 'name', this.value)">
-            <input type="number" class="col-cost" value="${item.balance}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'balance', this.value)">
-            <input type="number" class="col-cost" value="${item.rate}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'rate', this.value)">
-            <input type="number" class="col-cost" value="${item.minPayment}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'minPayment', this.value)">
+            <input type="text" value="${item.name}" placeholder="Loan Name" onchange="updateDebtItem(${index}, 'name', this.value)">
+            <input type="number" value="${item.balance}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'balance', this.value)">
+            <input type="number" value="${item.rate}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'rate', this.value)">
+            <input type="number" value="${item.minPayment}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'minPayment', this.value)">
             <button class="del-btn" onclick="removeDebtItem(${index})">✕</button>
         `;
-
-        container.appendChild(row);
+        debtListEl.appendChild(row);
     });
-    
-    updateDebtTotals();
+
+    calculateDebtTotals();
 }
 
-function updateDebtTotals() {
-    let totalDebt = 0;
-    let totalPayments = 0;
-
-    debts.forEach(d => {
-        totalDebt += d.balance;
-        totalPayments += d.payment;
-    });
+function calculateDebtTotals() {
+    const totalDebt = debts.reduce((sum, d) => sum + (parseFloat(d.balance) || 0), 0);
+    const totalPayments = debts.reduce((sum, d) => sum + (parseFloat(d.minPayment) || 0), 0);
 
     totalDebtEl.textContent = `$${totalDebt.toFixed(2)}`;
     totalPaymentsEl.textContent = `$${totalPayments.toFixed(2)}`;
 }
 
+// Expose functions globally for button clicks
+window.addDebtItem = function() {
+    debts.push({ name: '', balance: 0, rate: 0, minPayment: 0 });
+    renderDebtList();
+};
+
+window.updateDebtItem = function(index, field, value) {
+    if (field === 'balance' || field === 'rate' || field === 'minPayment') {
+        debts[index][field] = parseFloat(value) || 0;
+    } else {
+        debts[index][field] = value;
+    }
+    calculateDebtTotals();
+};
+
+window.removeDebtItem = function(index) {
+    debts.splice(index, 1);
+    renderDebtList();
+};
+
 // Initial render
-renderDebts();
+renderDebtList();

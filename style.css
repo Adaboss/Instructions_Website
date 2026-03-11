@@ -725,7 +725,7 @@ footer {
 }
 
 .sheet-headers .col-cost {
-    width: 110px; /* Balance, Interest Rate, Min Payment headers */
+    width: 90px; /* Balance, Interest Rate, Min Payment headers */
     text-align: right;
 }
 

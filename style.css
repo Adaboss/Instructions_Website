@@ -710,3 +710,23 @@ footer {
     color: var(--text-muted);
 }
 
+/* Step 6 Debt Snowball Inputs Alignment */
+#debt-list .sheet-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+#debt-list .sheet-item input[type="text"] {
+    flex: 1; 
+}
+
+#debt-list .sheet-item input[type="number"] {
+    width: 120px;
+    text-align: right;
+}
+
+#debt-list .sheet-item button.del-btn {
+    width: 30px;
+    flex-shrink: 0;
+}

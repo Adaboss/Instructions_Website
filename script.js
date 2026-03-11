@@ -310,3 +310,62 @@ renderAidList('costs');
 renderAidList('aid');
 calculateAidTotals();
 
+// --- Step 6 Debt Snowball Calculator ---
+let debts = [];
+
+const debtListEl = document.getElementById('debt-list');
+const totalDebtEl = document.getElementById('total-debt');
+const totalPaymentsEl = document.getElementById('total-payments');
+
+window.addDebtItem = function() {
+    debts.push({ name: '', balance: 0, payment: 0 });
+    renderDebts();
+};
+
+window.removeDebt = function(index) {
+    debts.splice(index, 1);
+    renderDebts();
+};
+
+window.updateDebt = function(index, field, value) {
+    debts[index][field] = field === 'balance' || field === 'payment' ? parseFloat(value) || 0 : value;
+    updateDebtTotals();
+};
+
+function renderDebts() {
+    debtListEl.innerHTML = '';
+
+    debts.forEach((debt, index) => {
+        const row = document.createElement('div');
+        row.className = 'sheet-item';
+        row.innerHTML = `
+            <input type="text" placeholder="Debt Name" value="${debt.name}" 
+                onchange="updateDebt(${index}, 'name', this.value)">
+            <input type="number" placeholder="Balance" value="${debt.balance}" 
+                onchange="updateDebt(${index}, 'balance', this.value)">
+            <input type="number" placeholder="Min Payment" value="${debt.payment}" 
+                onchange="updateDebt(${index}, 'payment', this.value)">
+            <button onclick="removeDebt(${index})">✕</button>
+        `;
+        debtListEl.appendChild(row);
+    });
+
+    updateDebtTotals();
+}
+
+function updateDebtTotals() {
+    let totalDebt = 0;
+    let totalPayments = 0;
+
+    debts.forEach(d => {
+        totalDebt += d.balance;
+        totalPayments += d.payment;
+    });
+
+    totalDebtEl.textContent = `$${totalDebt.toFixed(2)}`;
+    totalPaymentsEl.textContent = `$${totalPayments.toFixed(2)}`;
+}
+
+// Initial render (if you want a default first row)
+renderDebts();
+

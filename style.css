@@ -714,7 +714,7 @@ footer {
 /* Headers */
 .sheet-headers {
     display: flex;
-    gap: 60px;
+    gap: 30px;
     font-weight: 600;
     align-items: center;
 }
@@ -725,7 +725,7 @@ footer {
 }
 
 .sheet-headers .col-cost {
-    width: 40px; /* Balance, Interest Rate, Min Payment headers */
+    width: 30px; /* Balance, Interest Rate, Min Payment headers */
     text-align: right;
 }
 
@@ -745,7 +745,7 @@ footer {
 }
 
 #debt-list .sheet-item input.item-cost {
-    width: 120px; /* Inputs same width as headers */
+    width: 110px; /* Inputs same width as headers */
     text-align: right; /* Center numbers on right */
 }
 

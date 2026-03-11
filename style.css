@@ -711,3 +711,27 @@ footer {
 }
 
 
+/* Debt Snowball table columns */
+.sheet-headers,
+.sheet-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.col-name {
+    flex: 2;           /* more space for loan names */
+}
+
+.col-balance,
+.col-rate,
+.col-payment {
+    flex: 1;           /* numeric columns equal width */
+    text-align: right; /* align numbers to right */
+}
+
+.col-action {
+    width: 30px;       /* fixed width for delete button */
+}
+
+

@@ -714,7 +714,7 @@ footer {
 /* Headers */
 .sheet-headers {
     display: flex;
-    gap: 200px;
+    gap: 60px;
     font-weight: 600;
     align-items: center;
 }
@@ -725,7 +725,7 @@ footer {
 }
 
 .sheet-headers .col-cost {
-    width: 55px; /* Balance, Interest Rate, Min Payment headers */
+    width: 40px; /* Balance, Interest Rate, Min Payment headers */
     text-align: right;
 }
 

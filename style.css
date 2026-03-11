@@ -722,11 +722,11 @@ footer {
 }
 
 #debt-list .sheet-item input[type="number"] {
-    width: 120px;
+    width: 130px;
     text-align: right;
 }
 
 #debt-list .sheet-item button.del-btn {
-    width: 30px;
+    width: 40px;
     flex-shrink: 0;
 }

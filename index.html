@@ -293,38 +293,60 @@
                     
 
         <!-- Step 6 -->
-        <section class="step-card fade-in">
+        <section class="step-card fade-in" id="step6">
         <h2>Debt Snowball Calculator</h2>
         
-        <p>The debt snowball method focuses on paying off your smallest debt first while making minimum payments on the others.</p>
+        <p>This calculator helps you organize your debts and see your total monthly payments.
+        List your debts from smallest to largest balance to follow the snowball method.</p>
         
-        <p>As each debt is paid off, the payment amount rolls into the next loan, creating a “snowball” effect.</p>
+        <div class="financial-aid-container">
         
-        <div class="sub-step">
-        <h3>Step 1 – List your loans</h3>
-        <ul>
-        <li>Loan name</li>
-        <li>Total balance</li>
-        <li>Interest rate</li>
-        <li>Minimum monthly payment</li>
-        </ul>
+        <div class="aid-grid">
+        
+        <!-- Debt List -->
+        <div class="sheet-section costs-section">
+        <h3>Your Debts</h3>
+        
+        <div class="sheet-headers">
+        <div class="col-name">Debt Name</div>
+        <div class="col-cost">Balance ($)</div>
+        <div class="col-cost">Min Payment ($)</div>
+        <div class="col-action"></div>
         </div>
         
-        <div class="sub-step">
-        <h3>Step 2 – Order smallest to largest</h3>
-        <p>Sort your loans by balance starting with the smallest.</p>
+        <div id="debt-list" class="sheet-list">
         </div>
         
-        <div class="sub-step">
-        <h3>Step 3 – Choose extra payment</h3>
-        <p>Decide how much extra money you can put toward debt each month.</p>
+        <button class="add-btn" onclick="addDebtItem()">+ Add Debt</button>
+        
         </div>
         
-        <div class="sub-step">
-        <h3>Step 4 – Apply the snowball</h3>
-        <p>Pay the smallest loan first. Once it is paid off, move to the next loan.</p>
         </div>
         
+        <div class="aid-totals-section">
+        <h3>Debt Summary</h3>
+        
+        <div class="aid-summary-grid">
+        
+        <div class="aid-summary-card">
+        <div class="card-label">Total Debt</div>
+        <div class="card-value" id="total-debt">$0.00</div>
+        </div>
+        
+        <div class="aid-summary-card">
+        <div class="card-label">Total Monthly Payments</div>
+        <div class="card-value" id="total-payments">$0.00</div>
+        </div>
+        
+        </div>
+        
+        <p style="margin-top:10px;">
+        Tip: Pay the minimum on all debts and put extra money toward the smallest balance first.
+        </p>
+        
+        </div>
+        
+        </div>
         </section>
         
         

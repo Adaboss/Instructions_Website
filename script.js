@@ -310,6 +310,7 @@ renderAidList('costs');
 renderAidList('aid');
 calculateAidTotals();
 
+
 // --- Step 6 Debt Snowball Calculator ---
 let debts = [];
 
@@ -318,7 +319,7 @@ const totalDebtEl = document.getElementById('total-debt');
 const totalPaymentsEl = document.getElementById('total-payments');
 
 window.addDebtItem = function() {
-    debts.push({ name: '', balance: 0, payment: 0 });
+    debts.push({ name: '', balance: 0, rate: 0, payment: 0 });
     renderDebts();
 };
 
@@ -328,7 +329,11 @@ window.removeDebt = function(index) {
 };
 
 window.updateDebt = function(index, field, value) {
-    debts[index][field] = field === 'balance' || field === 'payment' ? parseFloat(value) || 0 : value;
+    if (field === 'balance' || field === 'payment' || field === 'rate') {
+        debts[index][field] = parseFloat(value) || 0;
+    } else {
+        debts[index][field] = value;
+    }
     updateDebtTotals();
 };
 
@@ -339,12 +344,14 @@ function renderDebts() {
         const row = document.createElement('div');
         row.className = 'sheet-item';
         row.innerHTML = `
-            <input type="text" placeholder="Debt Name" value="${debt.name}" 
+            <input type="text" placeholder="Loan Name" value="${debt.name}" 
                 onchange="updateDebt(${index}, 'name', this.value)">
-            <input type="number" placeholder="Balance" value="${debt.balance}" 
-                onchange="updateDebt(${index}, 'balance', this.value)">
-            <input type="number" placeholder="Min Payment" value="${debt.payment}" 
-                onchange="updateDebt(${index}, 'payment', this.value)">
+            <input type="number" placeholder="Balance ($)" value="${debt.balance}" 
+                step="0.01" onchange="updateDebt(${index}, 'balance', this.value)">
+            <input type="number" placeholder="Interest Rate (%)" value="${debt.rate}" 
+                step="0.01" onchange="updateDebt(${index}, 'rate', this.value)">
+            <input type="number" placeholder="Min Payment ($)" value="${debt.payment}" 
+                step="0.01" onchange="updateDebt(${index}, 'payment', this.value)">
             <button onclick="removeDebt(${index})">✕</button>
         `;
         debtListEl.appendChild(row);
@@ -366,6 +373,5 @@ function updateDebtTotals() {
     totalPaymentsEl.textContent = `$${totalPayments.toFixed(2)}`;
 }
 
-// Initial render (if you want a default first row)
+// Initial render
 renderDebts();
-

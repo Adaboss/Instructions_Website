@@ -176,6 +176,11 @@ themeToggleBtn.addEventListener('click', () => {
         sunIcon.classList.remove('hidden');
         if (themeText) themeText.textContent = 'Light Mode';
     }
+
+    // Attempt to redraw timeline chart to get updated colors
+    if (typeof calculateDebtTotals === 'function') {
+        calculateDebtTotals();
+    }
 });
 
 // --- Step 5 Financial Aid Calculator ---
@@ -315,8 +320,8 @@ calculateAidTotals();
 
 // --- Step 6: Debt Snowball Calculator ---
 let debts = [
-    { name: 'Credit Card', balance: 500, rate: 15, minPayment: 50 },
-    { name: 'Personal Loan', balance: 1500, rate: 5, minPayment: 100 }
+    { name: 'Credit Card', type: 'cc', balance: 500, rate: 15, monthlyUsage: 50, actualPayment: 150 },
+    { name: 'Student Loan', type: 'sl', balance: 15000, rate: 5, monthlyUsage: 0, actualPayment: 600 }
 ];
 
 const debtListEl = document.getElementById('debt-list');
@@ -329,13 +334,20 @@ function renderDebtList() {
     debts.forEach((item, index) => {
         const row = document.createElement('div');
         row.className = 'sheet-item';
+        row.style.gap = '12px';
 
         row.innerHTML = `
-            <input type="text" value="${item.name}" placeholder="Loan Name" onchange="updateDebtItem(${index}, 'name', this.value)">
-            <input type="number" value="${item.balance}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'balance', this.value)">
-            <input type="number" value="${item.rate}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'rate', this.value)">
-            <input type="number" value="${item.minPayment}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'minPayment', this.value)">
-            <button class="del-btn" onclick="removeDebtItem(${index})">✕</button>
+            <input type="text" class="item-name" style="flex:1" value="${item.name}" placeholder="Loan Name" onchange="updateDebtItem(${index}, 'name', this.value)">
+            <select style="width:110px; padding:8px; border:1px solid var(--border); border-radius:6px; background:var(--surface); color:var(--text-main)" onchange="updateDebtItem(${index}, 'type', this.value)">
+                <option value="cc" ${item.type === 'cc' ? 'selected' : ''}>Credit Card</option>
+                <option value="sl" ${item.type === 'sl' ? 'selected' : ''}>Student Loan</option>
+                <option value="other" ${item.type === 'other' ? 'selected' : ''}>Other</option>
+            </select>
+            <input type="number" class="item-cost" style="width:100px" value="${item.balance}" placeholder="0.00" step="0.01" min="0" oninput="updateDebtItem(${index}, 'balance', this.value)">
+            <input type="number" class="item-cost" style="width:80px" value="${item.rate}" placeholder="0.00" step="0.01" min="0" oninput="updateDebtItem(${index}, 'rate', this.value)">
+            <input type="number" class="item-cost" style="width:100px" value="${item.monthlyUsage !== undefined ? item.monthlyUsage : ''}" placeholder="0.00" step="0.01" min="0" oninput="updateDebtItem(${index}, 'monthlyUsage', this.value)">
+            <input type="number" class="item-cost" style="width:100px" value="${item.actualPayment !== undefined ? item.actualPayment : ''}" placeholder="0.00" step="0.01" min="0" oninput="updateDebtItem(${index}, 'actualPayment', this.value)">
+            <button class="del-btn" style="width:30px" onclick="removeDebtItem(${index})">✕</button>
         `;
         debtListEl.appendChild(row);
     });
@@ -344,32 +356,414 @@ function renderDebtList() {
 }
 
 function calculateDebtTotals() {
-    const totalDebt = debts.reduce((sum, d) => sum + (parseFloat(d.balance) || 0), 0);
-    const totalPayments = debts.reduce((sum, d) => sum + (parseFloat(d.minPayment) || 0), 0);
+    let totalDebt = 0;
+    let totalActualPayments = 0;
+
+    let minScenarioDebts = [];
+    let actScenarioDebts = [];
+
+    debts.forEach(d => {
+        let bal = parseFloat(d.balance) || 0;
+        let rate = parseFloat(d.rate) || 0;
+        let usage = parseFloat(d.monthlyUsage) || 0;
+        let actP = parseFloat(d.actualPayment) || 0;
+
+        let minP = 0;
+        if (d.type === 'cc') minP = 40;
+        else if (d.type === 'sl') minP = 500;
+        else minP = Math.max(25, bal * 0.03); // fallback logic
+
+        totalDebt += bal;
+        totalActualPayments += actP;
+
+        minScenarioDebts.push({
+            name: d.name,
+            balance: bal,
+            rate: rate,
+            payment: minP,
+            usage: usage,
+            interestPaid: 0
+        });
+
+        actScenarioDebts.push({
+            name: d.name,
+            balance: bal,
+            rate: rate,
+            payment: actP,
+            usage: usage,
+            interestPaid: 0
+        });
+    });
 
     totalDebtEl.textContent = `$${totalDebt.toFixed(2)}`;
-    totalPaymentsEl.textContent = `$${totalPayments.toFixed(2)}`;
+    totalPaymentsEl.textContent = `$${totalActualPayments.toFixed(2)}`;
+
+    generateTimeline(minScenarioDebts, actScenarioDebts);
+}
+
+let snowballChartInstance = null;
+
+function generateTimeline(minDebts, actDebts) {
+    let totalMinInterest = 0;
+    let totalActInterest = 0;
+
+    const labels = ['Now'];
+
+    // Initial balances at Now
+    let startMinBalance = minDebts.reduce((sum, d) => sum + d.balance, 0);
+    let startActBalance = actDebts.reduce((sum, d) => sum + d.balance, 0);
+
+    const minData = [startMinBalance];
+    const actData = [startActBalance];
+
+    for (let year = 1; year <= 5; year++) {
+        for (let q = 1; q <= 4; q++) {
+            // 3 months per quarter
+            for (let m = 0; m < 3; m++) {
+                // Min Scenario
+                minDebts.forEach(d => {
+                    if (d.balance > 0 || d.usage > 0) {
+                        let monthlyRate = (d.rate / 100) / 12;
+                        let interest = d.balance * monthlyRate;
+                        d.interestPaid += interest;
+                        totalMinInterest += interest;
+
+                        d.balance += interest + d.usage;
+                        let payment = Math.min(d.payment, d.balance);
+                        if (d.balance < d.payment && d.usage > 0) {
+                            payment = d.balance; // Pay off whatever is remaining
+                        }
+                        d.balance -= payment;
+                    }
+                });
+
+                // Act Scenario
+                actDebts.forEach(d => {
+                    if (d.balance > 0 || d.usage > 0) {
+                        let monthlyRate = (d.rate / 100) / 12;
+                        let interest = d.balance * monthlyRate;
+                        d.interestPaid += interest;
+                        totalActInterest += interest;
+
+                        d.balance += interest + d.usage;
+                        let payment = Math.min(d.payment, d.balance);
+                        if (d.balance < d.payment && d.usage > 0) {
+                            payment = d.balance;
+                        }
+                        d.balance -= payment;
+                    }
+                });
+            }
+
+            let minQBalance = minDebts.reduce((sum, d) => sum + d.balance, 0);
+            let actQBalance = actDebts.reduce((sum, d) => sum + d.balance, 0);
+
+            labels.push(`Y${year} Q${q}`);
+            minData.push(Math.max(0, minQBalance));
+            actData.push(Math.max(0, actQBalance));
+
+            // if both are paid off (and no usage) we can break early
+            let minPaidOff = minDebts.every(d => d.balance <= 0 && d.usage <= 0);
+            let actPaidOff = actDebts.every(d => d.balance <= 0 && d.usage <= 0);
+
+            if (minPaidOff && actPaidOff) break;
+        }
+        let minPaidOff = minDebts.every(d => d.balance <= 0 && d.usage <= 0);
+        let actPaidOff = actDebts.every(d => d.balance <= 0 && d.usage <= 0);
+        if (minPaidOff && actPaidOff) break;
+    }
+
+    const totalMinInterestEl = document.getElementById('total-interest-min');
+    const totalActInterestEl = document.getElementById('total-interest-act');
+    const totalSavedEl = document.getElementById('total-saved');
+
+    if (totalMinInterestEl) totalMinInterestEl.textContent = `$${totalMinInterest.toFixed(2)}`;
+    if (totalActInterestEl) totalActInterestEl.textContent = `$${totalActInterest.toFixed(2)}`;
+    if (totalSavedEl) {
+        let saved = totalMinInterest - totalActInterest;
+        totalSavedEl.textContent = `$${saved.toFixed(2)}`;
+        totalSavedEl.parentElement.style.background = saved >= 0 ? 'var(--success-light)' : 'var(--danger-light)';
+        totalSavedEl.parentElement.style.borderColor = saved >= 0 ? 'var(--success)' : 'var(--danger)';
+        totalSavedEl.style.color = saved >= 0 ? 'var(--success)' : 'var(--danger)';
+    }
+
+    const ctx = document.getElementById('snowballChart');
+    if (!ctx) return;
+
+    if (snowballChartInstance) {
+        snowballChartInstance.destroy();
+    }
+
+    let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    let textColor = isDark ? '#d1d5db' : '#6B7280';
+    let gridColor = isDark ? '#374151' : '#E5E7EB';
+
+    snowballChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Min Payment Balance',
+                    data: minData,
+                    borderColor: '#EF4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 3
+                },
+                {
+                    label: 'Actual Payment Balance',
+                    data: actData,
+                    borderColor: '#4F46E5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: textColor, font: { family: 'Inter, sans-serif' } }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function (value) { return '$' + value; },
+                        color: textColor
+                    },
+                    grid: { color: gridColor }
+                },
+                x: {
+                    ticks: { color: textColor },
+                    grid: { color: gridColor }
+                }
+            }
+        }
+    });
 }
 
 // Expose functions globally for button clicks
-window.addDebtItem = function() {
-    debts.push({ name: '', balance: 0, rate: 0, minPayment: 0 });
+window.addDebtItem = function () {
+    debts.push({ name: '', type: 'cc', balance: 0, rate: 0, monthlyUsage: '', actualPayment: '' });
     renderDebtList();
 };
 
-window.updateDebtItem = function(index, field, value) {
-    if (field === 'balance' || field === 'rate' || field === 'minPayment') {
-        debts[index][field] = parseFloat(value) || 0;
+window.updateDebtItem = function (index, field, value) {
+    if (field === 'balance' || field === 'rate' || field === 'monthlyUsage' || field === 'actualPayment') {
+        debts[index][field] = value === '' ? '' : (parseFloat(value) || 0);
     } else {
         debts[index][field] = value;
     }
+
+    // Re-calculate totals without re-rendering to prevent losing cursor focus
     calculateDebtTotals();
 };
 
-window.removeDebtItem = function(index) {
+window.removeDebtItem = function (index) {
     debts.splice(index, 1);
     renderDebtList();
 };
 
 // Initial render
 renderDebtList();
+
+// --- Step 7: Balance Sheet ---
+let bsAssets = [
+    { name: 'Checking Account', amount: 1000, apr: 0.1 },
+    { name: 'Savings Account', amount: 5000, apr: 4.25 },
+    { name: 'Index Funds', amount: 2500, apr: 7.0 }
+];
+
+let bsLiabilities = [
+    { name: 'Student Loan', amount: 15000, apr: 5.5 },
+    { name: 'Credit Card', amount: 500, apr: 22.0 }
+];
+
+const assetsListEl = document.getElementById('assets-list');
+const liabilitiesListEl = document.getElementById('liabilities-list');
+
+const bsTotalAssetsEl = document.getElementById('bs-total-assets');
+const bsTotalLiabilitiesEl = document.getElementById('bs-total-liabilities');
+const bsNetWorthEl = document.getElementById('bs-net-worth');
+const bsNetWorthCardEl = document.getElementById('bs-net-worth-card');
+
+function renderBSList(type) {
+    const list = type === 'assets' ? bsAssets : bsLiabilities;
+    const container = type === 'assets' ? assetsListEl : liabilitiesListEl;
+
+    container.innerHTML = '';
+
+    list.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'sheet-item';
+        row.style.gap = '12px';
+
+        row.innerHTML = `
+            <input type="text" class="item-name" style="flex:1" value="${item.name}" placeholder="Name" onchange="updateBSItem('${type}', ${index}, 'name', this.value)">
+            <input type="number" class="item-cost" style="width:100px" value="${item.amount}" placeholder="0.00" step="0.01" min="0" oninput="updateBSItem('${type}', ${index}, 'amount', this.value)">
+            <input type="number" class="item-cost" style="width:80px" value="${item.apr}" placeholder="0.00" step="0.01" min="0" oninput="updateBSItem('${type}', ${index}, 'apr', this.value)">
+            <button class="del-btn" style="width:30px" onclick="removeBSItem('${type}', ${index})">✕</button>
+        `;
+        container.appendChild(row);
+    });
+
+    calculateBSTotals();
+}
+
+function calculateBSTotals() {
+    const totalAssets = bsAssets.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0);
+    const totalLiabilities = bsLiabilities.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0);
+    const netWorth = totalAssets - totalLiabilities;
+
+    // Calculate Annual Impacts (Value * (APR/100))
+    const annualAssetGrowth = bsAssets.reduce((sum, item) => {
+        let amt = parseFloat(item.amount) || 0;
+        let apr = parseFloat(item.apr) || 0;
+        return sum + (amt * (apr / 100));
+    }, 0);
+
+    const annualLiabilityCost = bsLiabilities.reduce((sum, item) => {
+        let amt = parseFloat(item.amount) || 0;
+        let apr = parseFloat(item.apr) || 0;
+        return sum + (amt * (apr / 100));
+    }, 0);
+
+    const netAnnualChange = annualAssetGrowth - annualLiabilityCost;
+
+    bsTotalAssetsEl.textContent = `$${totalAssets.toFixed(2)}`;
+    bsTotalLiabilitiesEl.textContent = `$${totalLiabilities.toFixed(2)}`;
+    bsNetWorthEl.textContent = `$${netWorth.toFixed(2)}`;
+
+    // Update Net Worth Card colors
+    if (netWorth > 0) {
+        bsNetWorthCardEl.style.background = 'var(--success-light)';
+        bsNetWorthCardEl.style.borderColor = 'var(--success)';
+        bsNetWorthEl.style.color = 'var(--success)';
+    } else if (netWorth < 0) {
+        bsNetWorthCardEl.style.background = 'var(--danger-light)';
+        bsNetWorthCardEl.style.borderColor = 'var(--danger)';
+        bsNetWorthEl.style.color = 'var(--danger)';
+    } else {
+        bsNetWorthCardEl.style.background = 'var(--surface)';
+        bsNetWorthCardEl.style.borderColor = 'var(--border)';
+        bsNetWorthEl.style.color = 'var(--text-main)';
+    }
+
+    // Update Annual Impact Summaries
+    const growthEl = document.getElementById('bs-annual-growth');
+    const lossEl = document.getElementById('bs-annual-loss');
+    const netEl = document.getElementById('bs-annual-net');
+
+    if (growthEl) growthEl.textContent = `+$${annualAssetGrowth.toFixed(2)}`;
+    if (lossEl) lossEl.textContent = `-$${annualLiabilityCost.toFixed(2)}`;
+
+    if (netEl) {
+        netEl.textContent = `${netAnnualChange >= 0 ? '+' : '-'}$${Math.abs(netAnnualChange).toFixed(2)}`;
+        netEl.style.color = netAnnualChange >= 0 ? 'var(--success)' : 'var(--danger)';
+    }
+}
+
+window.addBSItem = function (type) {
+    if (type === 'assets') {
+        bsAssets.push({ name: '', amount: '', apr: '' });
+    } else {
+        bsLiabilities.push({ name: '', amount: '', apr: '' });
+    }
+    renderBSList(type);
+};
+
+window.updateBSItem = function (type, index, field, value) {
+    const list = type === 'assets' ? bsAssets : bsLiabilities;
+    if (field === 'amount' || field === 'apr') {
+        list[index][field] = value === '' ? '' : (parseFloat(value) || 0);
+    } else {
+        list[index][field] = value;
+    }
+    calculateBSTotals();
+};
+
+window.removeBSItem = function (type, index) {
+    if (type === 'assets') {
+        bsAssets.splice(index, 1);
+    } else {
+        bsLiabilities.splice(index, 1);
+    }
+    renderBSList(type);
+};
+
+window.exportBalanceSheetCSV = function () {
+    let csvContent = "data:text/csv;charset=utf-8,";
+
+    // Header for Assets
+    csvContent += "Type,Name,Amount ($),APR (%)\r\n";
+
+    let totalAssets = 0;
+    bsAssets.forEach(item => {
+        let amt = parseFloat(item.amount) || 0;
+        let apr = parseFloat(item.apr) || 0;
+        totalAssets += amt;
+        csvContent += `Asset,${item.name || 'Unnamed'},${amt},${apr}\r\n`;
+    });
+
+    let totalLiabilities = 0;
+    bsLiabilities.forEach(item => {
+        let amt = parseFloat(item.amount) || 0;
+        let apr = parseFloat(item.apr) || 0;
+        totalLiabilities += amt;
+        csvContent += `Liability,${item.name || 'Unnamed'},${amt},${apr}\r\n`;
+    });
+
+    csvContent += `\r\n`;
+    csvContent += `Total Assets,${totalAssets}\r\n`;
+    csvContent += `Total Liabilities,${totalLiabilities}\r\n`;
+    csvContent += `Net Worth,${totalAssets - totalLiabilities}\r\n`;
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "balance_sheet.csv");
+    document.body.appendChild(link); // Required for FF
+
+    link.click();
+
+    // Clean up
+    document.body.removeChild(link);
+};
+
+// Initial Render for Balance Sheet
+renderBSList('assets');
+renderBSList('liabilities');
+
+// --- Header Auto-Hide Logic ---
+const header = document.querySelector('.glass-header');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+
+    // Hide if scrolling down and not at the very top (e.g. past 80px)
+    if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        header.classList.add('header-hidden');
+    } else {
+        // Show if scrolling up or at the top
+        header.classList.remove('header-hidden');
+    }
+
+    lastScrollY = currentScrollY;
+});
+
+window.addEventListener('mousemove', (e) => {
+    // Show header if mouse is near the top of the window (within top 60px)
+    if (e.clientY <= 60) {
+        header.classList.remove('header-hidden');
+    }
+});

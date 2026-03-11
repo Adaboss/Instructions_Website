@@ -337,24 +337,23 @@ window.updateDebt = function(index, field, value) {
     updateDebtTotals();
 };
 
-function renderDebts() {
-    debtListEl.innerHTML = '';
+function renderDebtList() {
+    const container = document.getElementById('debt-list');
+    container.innerHTML = '';
 
-    debts.forEach((debt, index) => {
+    debts.forEach((item, index) => {
         const row = document.createElement('div');
         row.className = 'sheet-item';
+
         row.innerHTML = `
-            <input type="text" placeholder="Loan Name" value="${debt.name}" 
-                onchange="updateDebt(${index}, 'name', this.value)">
-            <input type="number" placeholder="Balance ($)" value="${debt.balance}" 
-                step="0.01" onchange="updateDebt(${index}, 'balance', this.value)">
-            <input type="number" placeholder="Interest Rate (%)" value="${debt.rate}" 
-                step="0.01" onchange="updateDebt(${index}, 'rate', this.value)">
-            <input type="number" placeholder="Min Payment ($)" value="${debt.payment}" 
-                step="0.01" onchange="updateDebt(${index}, 'payment', this.value)">
-            <button onclick="removeDebt(${index})">✕</button>
+            <input type="text" class="col-name" value="${item.name}" placeholder="Loan Name" onchange="updateDebtItem(${index}, 'name', this.value)">
+            <input type="number" class="col-balance" value="${item.balance}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'balance', this.value)">
+            <input type="number" class="col-rate" value="${item.rate}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'rate', this.value)">
+            <input type="number" class="col-payment" value="${item.minPayment}" placeholder="0.00" step="0.01" min="0" onchange="updateDebtItem(${index}, 'minPayment', this.value)">
+            <button class="col-action" onclick="removeDebtItem(${index})">✕</button>
         `;
-        debtListEl.appendChild(row);
+
+        container.appendChild(row);
     });
 
     updateDebtTotals();

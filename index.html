@@ -46,676 +46,756 @@
         </div>
     </header>
 
-    <main class="container">
-        <!-- Step 1 -->
-        <section class="step-card fade-in">
-            <h2>Determining a monthly allowance</h2>
-            <p>The first stage of understanding your personal finance is knowing how much money you actually have every
-                month! For some this might be simple, for others you might need to dig deep. It’s okay if you don’t know
-                exactly how much that is now, you can determine the exact amount later with our helpful spreadsheet.</p>
-            <p>We don’t know the specifics of your situation, so it’s up to you to determine what counts towards your
-                monthly funds. Here are some cases that may apply to you:</p>
-            <ul>
-                <li>Monthly allowance from family</li>
-                <li>Work Study or any income from Jobs or side hustles</li>
-                <li>Apply a budget based on funds you might have saved in a checking or savings account</li>
-                <li>Financial Aid Received on a semester basis can be divided by 4 to give you a monthly allowance</li>
-            </ul>
-        </section>
-
-        <!-- Step 2 -->
-        <section class="step-card fade-in">
-            <h2>How to find all of your debts</h2>
-
-            <div class="sub-step">
-                <h3>1. Go to StudentAid.gov</h3>
-                <p>Go to <a href="http://Studentaid.gov" target="_blank">Studentaid.gov</a>.</p>
-                <p>Click “Log in” (top right) and log in using your FAFSA ID (email + password).</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>2. Go to your dashboard</h3>
-                <p>After logging in, click “My Aid” from the top menu or click “View Details” on your dashboard.</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>3. View your loans</h3>
-                <p>On the My Aid page, scroll down. You will see: Loan Type (Subsidized / Unsubsidized / PLUS, etc.),
-                    Loan Status, Loan Amount, and Total balance.</p>
-                <p>Click “View Breakdown” to see details.</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>4. Take Screenshot</h3>
-                <p>They want a screenshot showing Your name (if required), Total loan balance, and List of loans.</p>
-                <div class="os-instructions">
-                    <div class="os-box">
-                        <strong>On Mac:</strong>
-                        <code>Command + Shift + 4</code>
-                    </div>
-                    <div class="os-box">
-                        <strong>On Windows:</strong>
-                        <code>Windows + Shift + S</code>
-                    </div>
-                </div>
-                <p>Save the screenshot and submit it.</p>
-            </div>
-        </section>
-
-        <!-- Step 3 -->
-        <section class="step-card fade-in">
-            <h2>Find your work study and loan acceptances through MySlice</h2>
-            <p>To build your personal finance budget, an important step is knowing where and how to find your work study
-                payments and loan acceptances. To view your information, follow these steps:</p>
-
-            <div class="sub-step">
-                <h3>1. Go to MySlice</h3>
-                <p>Go to <a href="https://myslice.ps.syr.edu/" target="_blank">https://myslice.ps.syr.edu/</a></p>
-                <p>Click "Login" and enter your MySlice username and password.</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>2. Financial Aid</h3>
-                <p>Click "Financial Aid" and select Applicable Aid Year (for example, "2026").</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>3. Award Summary</h3>
-                <p>View the top row selections and click "Award Summary". From here, you can now see every scholarship
-                    and work study amount associated with your account.</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>4. Input your information</h3>
-                <p>Input your scholarships and work studies into the financial planner template below.</p>
-            </div>
-        </section>
-
-        <!-- Step 4 -->
-        <section class="step-card fade-in">
-            <h2>50/30/20 Sheet</h2>
-            <p>One of the easiest ways to see if you are living within your means is using the 50/30/20 rule. This means
-                that each month you allocate 50% to needs, 30% to wants, and 20% to savings. This can actually be quite
-                hard to stick to as a college student. As such, we recommend splitting this into
-                <strong>65/25/10</strong> (65% needs, 25% wants, 10% savings).
-            </p>
-
-            <p>Remember, a <strong>need</strong> is something that you need to live. This means rent/housing,
-                groceries/meal plan, utilities, or maybe even car insurance if applicable. A <strong>want</strong> is
-                something that you can physically live without. So yes, the $8.25 coffee you get doesn’t count as a
-                need. Essentially, any of your monthly expenses that aren’t basic needs, are wants.</p>
-
-            <p>Finally, you can count <strong>savings</strong> as anything that is left over at the month. We will dive
-                further into how you can use your money to save better with special types of savings accounts.</p>
-
-            <p>For now, please go through the spreadsheet below and fill this information out based on your situation.
-                The auto-calculating sheet will help you define how you spend your money each month.</p>
-
-            <!-- Spreadsheet Component -->
-            <div class="spreadsheet-container">
-                <div class="allowance-input">
-                    <label for="monthly-allowance">Monthly Allowance ($)</label>
-                    <input type="number" id="monthly-allowance" placeholder="e.g. 1500" value="1500" step="0.01">
-                </div>
-
-                <div class="spreadsheet-grid">
-                    <div class="sheet-section needs-section">
-                        <h3>Needs</h3>
-                        <div class="sheet-headers">
-                            <div class="col-name">Category</div>
-                            <div class="col-cost">Cost ($)</div>
-                            <div class="col-action"></div>
-                        </div>
-                        <div id="needs-list" class="sheet-list">
-                            <!-- Needs items will be rendered here -->
-                        </div>
-                        <button class="add-btn" onclick="addItem('needs')">+ Add Need</button>
-                    </div>
-
-                    <div class="sheet-section wants-section">
-                        <h3>Wants</h3>
-                        <div class="sheet-headers">
-                            <div class="col-name">Category</div>
-                            <div class="col-cost">Cost ($)</div>
-                            <div class="col-action"></div>
-                        </div>
-                        <div id="wants-list" class="sheet-list">
-                            <!-- Wants items will be rendered here -->
-                        </div>
-                        <button class="add-btn" onclick="addItem('wants')">+ Add Want</button>
-                    </div>
-                </div>
-
-                <div class="totals-section">
-                    <h3>Summary & Totals</h3>
-                    <div class="summary-cards">
-                        <div class="summary-card needs-card">
-                            <div class="card-label">Total Needs</div>
-                            <div class="card-value" id="total-needs">$0.00</div>
-                            <div class="card-percent" id="percent-needs">0%</div>
-                            <div class="target-percent">Target: 65%</div>
-                        </div>
-                        <div class="summary-card wants-card">
-                            <div class="card-label">Total Wants</div>
-                            <div class="card-value" id="total-wants">$0.00</div>
-                            <div class="card-percent" id="percent-wants">0%</div>
-                            <div class="target-percent">Target: 25%</div>
-                        </div>
-                        <div class="summary-card savings-card">
-                            <div class="card-label">Total Savings</div>
-                            <div class="card-value" id="total-savings">$0.00</div>
-                            <div class="card-percent" id="percent-savings">0%</div>
-                            <div class="target-percent">Target: 10%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Step 5 -->
-        <section class="step-card fade-in" id="step5">
-            <h2>Financial Aid Calculator</h2>
-            <p>Calculate your exact costs versus your financial aid. This will help you determine your school refund
-                amount.</p>
-
-            <div class="financial-aid-container">
-                <div class="aid-grid">
-                    <!-- Costs Section -->
-                    <div class="sheet-section costs-section">
-                        <h3>Estimated Costs</h3>
-                        <div class="sheet-headers">
-                            <div class="col-name">Estimate</div>
-                            <div class="col-cost">Amount ($)</div>
-                            <div class="col-action"></div>
-                        </div>
-                        <div id="costs-list" class="sheet-list">
-                            <!-- Cost items will be rendered here -->
-                        </div>
-                        <button class="add-btn" onclick="addAidItem('costs')">+ Add Cost</button>
-                    </div>
-
-                    <!-- Aid Section -->
-                    <div class="sheet-section aid-section">
-                        <h3>Grants and Aid</h3>
-                        <div class="sheet-headers">
-                            <div class="col-name">Aid Type</div>
-                            <div class="col-cost">Amount ($)</div>
-                            <div class="col-action"></div>
-                        </div>
-                        <div id="aid-list" class="sheet-list">
-                            <!-- Aid items will be rendered here -->
-                        </div>
-                        <button class="add-btn" onclick="addAidItem('aid')">+ Add Aid</button>
-                    </div>
-                </div>
-
-                <div class="aid-totals-section">
-                    <h3>Summary & Refund Per Semester</h3>
-                    <div class="aid-summary-grid">
-                        <div class="aid-summary-card">
-                            <div class="card-label">Total Costs</div>
-                            <div class="card-value" id="aid-total-costs">$0.00</div>
-                        </div>
-                        <div class="aid-summary-card">
-                            <div class="card-label">Total Aid</div>
-                            <div class="card-value" id="aid-total-aid">$0.00</div>
-                        </div>
-                        <div class="aid-summary-card refund-card">
-                            <div class="card-label">Total Refund</div>
-                            <div class="card-value" id="aid-total-refund">$0.00</div>
-                            <div class="target-percent">Positive means refund to you</div>
-                        </div>
-                    </div>
-
-                    <div class="period-breakdown">
-                        <div class="period-row">
-                            <span>Annually:</span>
-                            <strong>Costs: <span id="annually-costs">$0.00</span></strong>
-                            <strong>Aid: <span id="annually-aid">$0.00</span></strong>
-                            <strong>Refund: <span id="annually-refund" class="highlight-text">$0.00</span></strong>
-                        </div>
-                        <div class="period-row">
-                            <span>Per Semester:</span>
-                            <strong>Costs: <span id="semester-costs">$0.00</span></strong>
-                            <strong>Aid: <span id="semester-aid">$0.00</span></strong>
-                            <strong>Refund: <span id="semester-refund" class="highlight-text">$0.00</span></strong>
-                        </div>
-                        <div class="period-row">
-                            <span>Monthly:</span>
-                            <strong>Costs: <span id="monthly-costs">$0.00</span></strong>
-                            <strong>Aid: <span id="monthly-aid">$0.00</span></strong>
-                            <strong>Refund: <span id="monthly-refund" class="highlight-text">$0.00</span></strong>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            </div>
-        </section>
-
-
-        <!-- Step 6 -->
-        <section class="step-card fade-in" id="step6">
-            <h2>Debt Snowball Calculator</h2>
-            <p>This calculator helps you organize your debts and see your total monthly payments. List your debts from
-                smallest to largest balance to follow the snowball method.</p>
-
-            <div class="financial-aid-container">
-                <!-- Debt List -->
-                <div class="sheet-section costs-section">
-                    <h3>Your Debts</h3>
-                    <div class="sheet-headers" style="display:flex; gap:12px; padding:0;">
-                        <div class="col-name" style="flex:1;">Loan/Debt Name</div>
-                        <div style="width:110px; font-weight:600; font-size:0.8rem; text-transform:uppercase;">Type
-                        </div>
-                        <div
-                            style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
-                            Balance ($)</div>
-                        <div
-                            style="width:80px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
-                            Rate (%)</div>
-                        <div
-                            style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
-                            Mo. Usage ($)</div>
-                        <div
-                            style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
-                            Actual Pay ($)</div>
-                        <div style="width:30px;"></div>
-                    </div>
-
-                    <div id="debt-list" class="sheet-list"></div>
-                    <button class="add-btn" onclick="addDebtItem()">+ Add Debt</button>
-                </div>
-
-                <!-- Debt Summary -->
-                <div class="aid-totals-section">
-                    <h3>Debt Summary</h3>
-                    <div class="aid-summary-grid">
-                        <div class="aid-summary-card">
-                            <div class="card-label">Total Debt</div>
-                            <div class="card-value" id="total-debt">$0.00</div>
-                        </div>
-                        <div class="aid-summary-card">
-                            <div class="card-label">Total Monthly Payments</div>
-                            <div class="card-value" id="total-payments">$0.00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Payoff Timeline -->
-                <div class="aid-totals-section" style="margin-top: 24px;">
-                    <h3>5-Year Payoff Timeline</h3>
-                    <p style="text-align: center; margin-bottom: 16px; color: var(--text-muted);">See how only making
-                        the minimum payments causes interest to explode compared to paying off more than the minimum.
-                    </p>
-
-                    <div class="step5-table-wrapper" style="padding: 16px; background: var(--surface);">
-                        <canvas id="snowballChart"></canvas>
-                    </div>
-
-                    <div class="aid-summary-grid" style="margin-top: 24px;">
-                        <div class="aid-summary-card">
-                            <div class="card-label">Total Interest (Min)</div>
-                            <div class="card-value" id="total-interest-min" style="color: var(--danger)">$0.00</div>
-                        </div>
-                        <div class="aid-summary-card">
-                            <div class="card-label">Total Interest (Actual)</div>
-                            <div class="card-value" id="total-interest-act" style="color: var(--primary)">$0.00</div>
-                        </div>
-                        <div class="aid-summary-card"
-                            style="background: var(--success-light); border: 1px solid var(--success);">
-                            <div class="card-label" style="color: var(--success)">Interest Saved</div>
-                            <div class="card-value" id="total-saved" style="color: var(--success)">$0.00</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Debt Strategy Tip -->
-                <div style="margin-top: 32px;">
-                    <div class="aid-summary-card"
-                        style="text-align: left; background: var(--surface); border: 1px solid var(--border);">
-                        <h3 style="margin-top: 0; color: var(--primary); font-size: 1.25rem;">Debt Snowball vs. Debt
-                            Avalanche</h3>
-                        <p style="margin-bottom: 12px; font-size: 0.95rem; color: var(--text-muted);">There are two
-                            popular strategies to pay off debt while continuing to make the minimum payments on
-                            everything:</p>
-                        <ul style="margin-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                            <li style="margin-bottom: 8px;"><strong>Debt Snowball (Focus on Morale):</strong> Put any
-                                extra money toward the debt with the <strong>smallest balance</strong> first. This gives
-                                you quick wins by eliminating individual debts faster, building momentum to stay
-                                motivated!</li>
-                            <li><strong>Debt Avalanche (Focus on Math):</strong> Put extra money toward the debt with
-                                the <strong>highest interest rate</strong> first. This saves you the most money on
-                                interest overall, but it can take significantly longer before you see an individual debt
-                                wiped out.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- Step 7 -->
-        <section class="step-card fade-in">
-            <h2>Balance Sheet</h2>
-            <p>A balance sheet shows your financial position by comparing what you own (Assets) and what you owe
-                (Liabilities).</p>
-            <div style="margin: 16px 0;">
-                <code>Assets – Liabilities = Net Worth</code>
-            </div>
-            <p>If the number is positive, you own more than you owe.</p>
-
-            <div class="financial-aid-container" style="margin-top: 24px;">
-                <div class="aid-grid">
-                    <!-- Assets Section -->
-                    <div class="sheet-section aid-section">
-                        <h3>Assets (What you own)</h3>
-                        <div class="sheet-headers" style="display:flex; gap:12px; padding:0;">
-                            <div class="col-name" style="flex:1;">Asset Name</div>
-                            <div
-                                style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
-                                Value ($)</div>
-                            <div
-                                style="width:80px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
-                                APR (%)</div>
-                            <div style="width:30px;"></div>
-                        </div>
-                        <div id="assets-list" class="sheet-list"></div>
-                        <button class="add-btn" onclick="addBSItem('assets')">+ Add Asset</button>
-                    </div>
-
-                    <!-- Liabilities Section -->
-                    <div class="sheet-section costs-section">
-                        <h3>Liabilities (What you owe)</h3>
-                        <div class="sheet-headers" style="display:flex; gap:12px; padding:0;">
-                            <div class="col-name" style="flex:1;">Liability Name</div>
-                            <div
-                                style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
-                                Amount ($)</div>
-                            <div
-                                style="width:80px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
-                                APR (%)</div>
-                            <div style="width:30px;"></div>
-                        </div>
-                        <div id="liabilities-list" class="sheet-list"></div>
-                        <button class="add-btn" onclick="addBSItem('liabilities')">+ Add Liability</button>
-                    </div>
-                </div>
-
-                <div class="aid-totals-section" style="margin-top: 24px;">
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                        <h3 style="margin: 0;">Net Worth Summary</h3>
-                        <button onclick="exportBalanceSheetCSV()"
-                            style="background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background 0.2s;">
-                            Download CSV
-                        </button>
-                    </div>
-
-                    <div class="aid-summary-grid">
-                        <div class="aid-summary-card">
-                            <div class="card-label">Total Assets</div>
-                            <div class="card-value" id="bs-total-assets" style="color: var(--success)">$0.00</div>
-                        </div>
-                        <div class="aid-summary-card">
-                            <div class="card-label">Total Liabilities</div>
-                            <div class="card-value" id="bs-total-liabilities" style="color: var(--danger)">$0.00</div>
-                        </div>
-                        <div class="aid-summary-card" id="bs-net-worth-card"
-                            style="background: var(--surface); border: 1px solid var(--border);">
-                            <div class="card-label" id="bs-net-worth-label">Net Worth</div>
-                            <div class="card-value" id="bs-net-worth">$0.00</div>
-                        </div>
-                    </div>
-
-                    <h3 style="margin: 24px 0 16px 0;">Estimated Annual Impact</h3>
-                    <div class="aid-summary-grid">
-                        <div class="aid-summary-card">
-                            <div class="card-label">Est. Asset Growth /yr</div>
-                            <div class="card-value" id="bs-annual-growth" style="color: var(--success)">+$0.00</div>
-                        </div>
-                        <div class="aid-summary-card">
-                            <div class="card-label">Est. Liability Cost /yr</div>
-                            <div class="card-value" id="bs-annual-loss" style="color: var(--danger)">-$0.00</div>
-                        </div>
-                        <div class="aid-summary-card">
-                            <div class="card-label">Net Annual Change</div>
-                            <div class="card-value" id="bs-annual-net">$0.00</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Step 8 -->
-        <section class="step-card fade-in">
-            <h2>Credit Card Usage</h2>
-
-            <p>Credit cards can be helpful if used responsibly. They can help you build credit, which is crucial for
-                renting apartments, buying a car, or getting loans later in life. Additionally, credit cards can give
-                you rewards that can actually make you money just
-                by buying the things you were already paying for! Here are some tips to stay aware of your credit card
-                usage:</p>
-
-            <div class="sub-step">
-                <h3>Tip 1 – Only spend what you can pay back</h3>
-                <p>Treat your credit card like a debit card. Only spend money you already have.</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>Tip 2 – Pay your balance every month</h3>
-                <p>Pay the full balance each month to avoid interest charges.</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>Tip 3 – Keep your credit usage low</h3>
-
-                <p>Keep your credit usage below 30% of your credit limit. This means if you have a credit limit of
-                    $1,000, you should keep your balance below $300 every month.</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>Tip 4 – Avoid unnecessary debt</h3>
-                <p>Credit cards should be used carefully as they carry high interest rates as shown above in the debt
-                    snowball calculator. Avoid using them for things you cannot afford.</p>
-            </div>
-
-            <div class="cc-widgets">
-                <h3>Recommended Cards for Beginners & Students</h3>
-                <div class="cc-grid">
-                    <a href="https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited" target="_blank"
-                        class="cc-card">
-                        <div class="cc-tag">Good for Beginners</div>
-                        <h4>Chase Freedom Unlimited®</h4>
-                        <div class="cc-details">
-                            <p><strong>Rewards:</strong> 1.5% Cash Back on all purchases, higher rates on travel,
-                                dining, and drugstores.</p>
-                            <p><strong>Annual Fee:</strong> $0</p>
-                        </div>
-                        <div class="cc-btn">Learn More & Apply</div>
-                    </a>
-
-                    <a href="https://www.discover.com/credit-cards/student-credit-card/it-card.html?ICMPGN=ALL_CC_STUDENT_IT_CARD"
-                        target="_blank" class="cc-card">
-                        <div class="cc-tag">Best for Students</div>
-                        <h4>Discover it® Student Cash Back</h4>
-                        <div class="cc-details">
-                            <p><strong>Rewards:</strong> 5% Cash Back on everyday purchases at different places each
-                                quarter up to the quarterly maximum.</p>
-                            <p><strong>Annual Fee:</strong> $0</p>
-                        </div>
-                        <div class="cc-btn">Learn More & Apply</div>
-                    </a>
-                </div>
-            </div>
-
-        </section>
-
-
-        <!-- Step 9 -->
-        <section class="step-card fade-in">
-            <h2>Short-Term Goals vs Long-Term Goals</h2>
-
-            <p>Understanding what is important to you financially can help you make better spending decisions.</p>
-
-            <div class="sub-step">
-                <h3>Short-Term Goals</h3>
-                <p>These are things you want to achieve soon, usually within the next year.</p>
+    <div class="layout-wrapper container">
+        <aside class="sidebar">
+            <nav id="toc">
+                <h3>Navigation</h3>
                 <ul>
-                    <li>Saving for a trip</li>
-                    <li>Buying a laptop</li>
-                    <li>Building a small emergency fund</li>
+                    <li><a href="#step1">1. Monthly Allowance</a></li>
+                    <li><a href="#step4">2. 50/30/20 Sheet</a></li>
+                    <li><a href="#step11">3. Tracking Spending</a></li>
+                    <li><a href="#step3">4. MySlice Aid</a></li>
+                    <li><a href="#step5">5. Cost Calculator</a></li>
+                    <li><a href="#step2">6. Finding Debts</a></li>
+                    <li><a href="#step6">7. Debt Snowball</a></li>
+                    <li><a href="#step8">8. Credit Cards</a></li>
+                    <li><a href="#step7">9. Balance Sheet</a></li>
+                    <li><a href="#step9">10. Goals</a></li>
+                    <li><a href="#step10">11. Investing</a></li>
+                    <li><a href="#step12">12. HYSA & Tax</a></li>
+                    <li><a href="#quiz">13. Quiz</a></li>
                 </ul>
-            </div>
-
-            <div class="sub-step">
-                <h3>Long-Term Goals</h3>
-                <p>These goals take several years to achieve.</p>
-                <ul>
-                    <li>Paying off student loans</li>
-                    <li>Saving for a house</li>
-                    <li>Investing for retirement</li>
-                </ul>
-            </div>
-
-            <div class="sub-step">
-                <h3>Why this matters</h3>
-                <p>Knowing your goals helps you decide where your money should go each month.</p>
-            </div>
-
-        </section>
-
-
-        <!-- Step 10 -->
-        <section class="step-card fade-in">
-            <h2>The Importance of Investing</h2>
-
-            <p>Investing allows your money to grow over time instead of just sitting in a bank account.</p>
-
-            <div class="sub-step">
-                <h3>Why investing matters</h3>
-                <p>When you invest, your money can grow through compound interest and market returns.</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>Start early</h3>
-                <p>Even small amounts invested regularly can grow significantly over many years.</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>Common beginner investments</h3>
-                <ul>
-                    <li>Index funds</li>
-                    <li>ETFs (Exchange-Traded Funds)</li>
-                    <li>Retirement accounts</li>
-                </ul>
-            </div>
-
-            <p>Investing early gives your money more time to grow.</p>
-
-        </section>
-
-
-        <!-- Step 11 -->
-        <section class="step-card fade-in">
-            <h2>Tracking Your Spending</h2>
-
-            <p>Tracking your spending helps you understand where your money is going each month.</p>
-
-            <div class="sub-step">
-                <h3>Why it helps</h3>
-                <p>Many people underestimate how much they spend on small purchases like food, coffee, or subscriptions.
+            </nav>
+        </aside>
+        <main class="main-content">
+            <!-- Step 1 -->
+            <section class="step-card fade-in" id="step1">
+                <h2>Determining a monthly allowance</h2>
+                <p>The first stage of understanding your personal finance is knowing how much money you actually have
+                    every
+                    month! For some this might be simple, for others you might need to dig deep. It’s okay if you don’t
+                    know
+                    exactly how much that is now, you can determine the exact amount later with our helpful spreadsheet.
                 </p>
-            </div>
-
-            <div class="sub-step">
-                <h3>Ways to track spending</h3>
+                <p>We don’t know the specifics of your situation, so it’s up to you to determine what counts towards
+                    your
+                    monthly funds. Here are some cases that may apply to you:</p>
                 <ul>
-                    <li>Using a budgeting spreadsheet</li>
-                    <li>Using mobile budgeting apps</li>
-                    <li>Checking bank statements regularly</li>
+                    <li>Monthly allowance from family</li>
+                    <li>Work Study or any income from Jobs or side hustles</li>
+                    <li>Apply a budget based on funds you might have saved in a checking or savings account</li>
+                    <li>Financial Aid Received on a semester basis can be divided by 4 to give you a monthly allowance
+                    </li>
                 </ul>
-            </div>
+            </section>
 
-            <div class="sub-step">
-                <h3>Be consistent</h3>
-                <p>Updating your spending weekly or monthly will help you stay on track with your budget.</p>
-            </div>
+            <!-- Step 4 -->
+            <section class="step-card fade-in" id="step4">
+                <h2>50/30/20 Sheet
+                    <button id="btn-audio-step4" class="audio-btn"
+                        onclick="playGuideAudio('step4', 'audio/50_30_20.wav')" style="float: right; margin-top: -4px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                        </svg>
+                        Listen
+                    </button>
+                </h2>
+                <div id="text-step4">
+                    <p><span class="audio-phrase" data-start="0" data-end="11.2">One of the easiest ways to see if you
+                            are living within your means is using the 50/30/20 rule. This means that each month you
+                            allocate 50% to needs, 30% to wants, and 20% to savings.</span> <span class="audio-phrase"
+                            data-start="11.2" data-end="17.5">This can actually be quite hard to stick to as a college
+                            student. As such, we recommend splitting this into <strong>65/25/10</strong> (65% needs, 25%
+                            wants, 10% savings).</span></p>
 
-        </section>
+                    <p><span class="audio-phrase" data-start="17.7" data-end="26">Remember, a <strong>need</strong> is
+                            something that you need to live. This means rent/housing, groceries/meal plan, utilities, or
+                            maybe even car insurance if applicable.</span> <span class="audio-phrase" data-start="26"
+                            data-end="35.5">A <strong>want</strong> is something that you can physically live without.
+                            So yes, the $8.25 coffee you get doesn’t count as a need. Essentially, any of your monthly
+                            expenses that aren’t basic needs, are wants.</span></p>
 
+                    <p><span class="audio-phrase" data-start="35.5" data-end="41.2">Finally, you can count
+                            <strong>savings</strong> as anything that is left over at the end of the month.</span> <span
+                            class="audio-phrase" data-start="41.2" data-end="48">We will dive further into how you can
+                            use your money to save better with special types of savings accounts.</span></p>
 
-        <!-- Step 12 -->
-        <section class="step-card fade-in">
-            <h2>HYSA and Tax-Advantaged Accounts</h2>
-
-            <p>Different types of financial accounts can help your money grow faster or reduce taxes.</p>
-
-            <div class="sub-step">
-                <h3>High-Yield Savings Account (HYSA)</h3>
-                <p>A HYSA offers a higher interest rate than a regular savings account, helping your savings grow faster
-                    while still being easy to access.</p>
-            </div>
-
-            <div class="sub-step">
-                <h3>Tax-Advantaged Accounts</h3>
-                <p>These accounts offer tax benefits and are commonly used for long-term savings.</p>
-                <ul>
-                    <li>Roth IRA</li>
-                    <li>401(k)</li>
-                    <li>Health Savings Accounts (HSA)</li>
-                </ul>
-            </div>
-
-            <div class="sub-step">
-                <h3>Why they matter</h3>
-                <p>Using the right accounts can help you save more money over time and reduce taxes.</p>
-            </div>
-
-            <div class="cc-widgets">
-                <h3>Recommended Savings & Retirement Accounts</h3>
-                <div class="cc-grid">
-                    <a href="https://www.capitalone.com/bank/savings-accounts/online-performance-savings-account/"
-                        target="_blank" class="cc-card">
-                        <div class="cc-tag">Top HYSA Pick</div>
-                        <h4>Capital One 360 Performance Savings</h4>
-                        <div class="cc-details">
-                            <p><strong>Benefits:</strong> No monthly fees, no minimums, and a highly competitive Annual
-                                Percentage Yield (APY) to help your money grow faster.</p>
-                        </div>
-                        <div class="cc-btn">Learn More & Apply</div>
-                    </a>
-
-                    <a href="https://www.fidelity.com/retirement/roth-ira" target="_blank" class="cc-card">
-                        <div class="cc-tag">Top Roth IRA Pick</div>
-                        <h4>Fidelity Roth IRA</h4>
-                        <div class="cc-details">
-                            <p><strong>Benefits:</strong> $0 account fees, zero minimums, and access to zero expense
-                                ratio index funds. Maximize your long-term wealth with tax-free growth.</p>
-                        </div>
-                        <div class="cc-btn">Learn More & Apply</div>
-                    </a>
+                    <p><span class="audio-phrase" data-start="48" data-end="58">For now, please go through the
+                            spreadsheet below and fill this information out based on your situation. The
+                            auto-calculating sheet will help you define how you spend your money each month.</span></p>
                 </div>
-            </div>
 
-        </section>
+                <!-- Spreadsheet Component -->
+                <div class="spreadsheet-container">
+                    <div class="allowance-input">
+                        <label for="monthly-allowance">Monthly Allowance ($)</label>
+                        <input type="number" id="monthly-allowance" placeholder="e.g. 1500" value="1500" step="0.01">
+                    </div>
 
-        <!-- Quiz Section -->
-        <section class="step-card fade-in" style="margin-top: 32px;">
-            <h2>Knowledge Check</h2>
-            <p style="margin-bottom: 24px;">Ready to see what you've learned? Check your understanding with this quick
-                quiz!</p>
+                    <div class="spreadsheet-grid">
+                        <div class="sheet-section needs-section">
+                            <h3>Needs</h3>
+                            <div class="sheet-headers">
+                                <div class="col-name">Category</div>
+                                <div class="col-cost">Cost ($)</div>
+                                <div class="col-action"></div>
+                            </div>
+                            <div id="needs-list" class="sheet-list">
+                                <!-- Needs items will be rendered here -->
+                            </div>
+                            <button class="add-btn" onclick="addItem('needs')">+ Add Need</button>
+                        </div>
 
-            <div
-                style="width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: var(--surface);">
-                <iframe
-                    src="https://docs.google.com/forms/d/e/1FAIpQLSf3oodwZlogyIRr9F0K0BKTOrfwjlLCDxmGEniWra8PwYj7Fg/viewform?embedded=true"
-                    width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0"
-                    style="display: block; border: none;">Loading…</iframe>
-            </div>
-        </section>
+                        <div class="sheet-section wants-section">
+                            <h3>Wants</h3>
+                            <div class="sheet-headers">
+                                <div class="col-name">Category</div>
+                                <div class="col-cost">Cost ($)</div>
+                                <div class="col-action"></div>
+                            </div>
+                            <div id="wants-list" class="sheet-list">
+                                <!-- Wants items will be rendered here -->
+                            </div>
+                            <button class="add-btn" onclick="addItem('wants')">+ Add Want</button>
+                        </div>
+                    </div>
 
-    </main>
+                    <div class="totals-section">
+                        <h3>Summary & Totals</h3>
+                        <div class="summary-cards">
+                            <div class="summary-card needs-card">
+                                <div class="card-label">Total Needs</div>
+                                <div class="card-value" id="total-needs">$0.00</div>
+                                <div class="card-percent" id="percent-needs">0%</div>
+                                <div class="target-percent">Target: 65%</div>
+                            </div>
+                            <div class="summary-card wants-card">
+                                <div class="card-label">Total Wants</div>
+                                <div class="card-value" id="total-wants">$0.00</div>
+                                <div class="card-percent" id="percent-wants">0%</div>
+                                <div class="target-percent">Target: 25%</div>
+                            </div>
+                            <div class="summary-card savings-card">
+                                <div class="card-label">Total Savings</div>
+                                <div class="card-value" id="total-savings">$0.00</div>
+                                <div class="card-percent" id="percent-savings">0%</div>
+                                <div class="target-percent">Target: 10%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 11 -->
+            <section class="step-card fade-in" id="step11">
+                <h2>Tracking Your Spending</h2>
+
+                <p>Tracking your spending helps you understand where your money is going each month.</p>
+
+                <div class="sub-step">
+                    <h3>Why it helps</h3>
+                    <p>Many people underestimate how much they spend on small purchases like food, coffee, or
+                        subscriptions.
+                    </p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>Ways to track spending</h3>
+                    <ul>
+                        <li>Using a budgeting spreadsheet</li>
+                        <li>Using mobile budgeting apps</li>
+                        <li>Checking bank statements regularly</li>
+                    </ul>
+                </div>
+
+                <div class="sub-step">
+                    <h3>Be consistent</h3>
+                    <p>Updating your spending weekly or monthly will help you stay on track with your budget.</p>
+                </div>
+                <div class="cc-widgets"
+                    style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
+                    <h3>Recommended App for Smarter Money Decisions</h3>
+                    <div class="cc-grid" style="grid-template-columns: 1fr;">
+                        <a href="https://www.getfinvest.com/" target="_blank" class="cc-card">
+                            <div class="cc-tag">Top Tracking App</div>
+                            <h4>Finvest</h4>
+                            <div class="cc-details">
+                                <p><strong>Benefits:</strong> An AI-powered wealth manager that helps you invest, save,
+                                    track, and optimize every dollar with confidence in one unified platform.</p>
+                            </div>
+                            <div class="cc-btn">Learn More & Get the App</div>
+                        </a>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Step 3 -->
+            <section class="step-card fade-in" id="step3">
+                <h2>Find your work study and loan acceptances through MySlice</h2>
+                <p>To build your personal finance budget, an important step is knowing where and how to find your work
+                    study
+                    payments and loan acceptances. To view your information, follow these steps:</p>
+
+                <div class="sub-step">
+                    <h3>1. Go to MySlice</h3>
+                    <p>Go to <a href="https://myslice.ps.syr.edu/" target="_blank">https://myslice.ps.syr.edu/</a></p>
+                    <p>Click "Login" and enter your MySlice username and password.</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>2. Financial Aid</h3>
+                    <p>Click "Financial Aid" and select Applicable Aid Year (for example, "2026").</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>3. Award Summary</h3>
+                    <p>View the top row selections and click "Award Summary". From here, you can now see every
+                        scholarship
+                        and work study amount associated with your account.</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>4. Input your information</h3>
+                    <p>Input your scholarships and work studies into the financial planner template below.</p>
+                </div>
+            </section>
+
+            <!-- Step 5 -->
+            <section class="step-card fade-in" id="step5">
+                <h2>Cost of College Calculator</h2>
+                <p>Calculate your exact costs versus your financial aid. This will help you determine your true out-of-pocket cost of college, or any potential refund you may receive.</p>
+
+                <div class="financial-aid-container">
+                    <div class="aid-grid">
+                        <!-- Costs Section -->
+                        <div class="sheet-section costs-section">
+                            <h3>Estimated Costs</h3>
+                            <div class="sheet-headers">
+                                <div class="col-name">Estimate</div>
+                                <div class="col-cost">Amount ($)</div>
+                                <div class="col-action"></div>
+                            </div>
+                            <div id="costs-list" class="sheet-list">
+                                <!-- Cost items will be rendered here -->
+                            </div>
+                            <button class="add-btn" onclick="addAidItem('costs')">+ Add Cost</button>
+                        </div>
+
+                        <!-- Aid Section -->
+                        <div class="sheet-section aid-section">
+                            <h3>Grants and Aid</h3>
+                            <div class="sheet-headers">
+                                <div class="col-name">Aid Type</div>
+                                <div class="col-cost">Amount ($)</div>
+                                <div class="col-action"></div>
+                            </div>
+                            <div id="aid-list" class="sheet-list">
+                                <!-- Aid items will be rendered here -->
+                            </div>
+                            <button class="add-btn" onclick="addAidItem('aid')">+ Add Aid</button>
+                        </div>
+                    </div>
+
+                    <div class="aid-totals-section">
+                        <h3>Summary & Net Balance Per Semester</h3>
+                        <div class="aid-summary-grid">
+                            <div class="aid-summary-card">
+                                <div class="card-label">Total Costs</div>
+                                <div class="card-value" id="aid-total-costs">$0.00</div>
+                            </div>
+                            <div class="aid-summary-card">
+                                <div class="card-label">Total Aid</div>
+                                <div class="card-value" id="aid-total-aid">$0.00</div>
+                            </div>
+                            <div class="aid-summary-card refund-card">
+                                <div class="card-label">Net Balance</div>
+                                <div class="card-value" id="aid-total-refund">$0.00</div>
+                                <div class="target-percent">Positive means refund, negative means cost to you</div>
+                            </div>
+                        </div>
+
+                        <div class="period-breakdown">
+                            <div class="period-row">
+                                <span>Annually:</span>
+                                <strong>Costs: <span id="annually-costs">$0.00</span></strong>
+                                <strong>Aid: <span id="annually-aid">$0.00</span></strong>
+                                <strong>Net: <span id="annually-refund" class="highlight-text">$0.00</span></strong>
+                            </div>
+                            <div class="period-row">
+                                <span>Per Semester:</span>
+                                <strong>Costs: <span id="semester-costs">$0.00</span></strong>
+                                <strong>Aid: <span id="semester-aid">$0.00</span></strong>
+                                <strong>Net: <span id="semester-refund" class="highlight-text">$0.00</span></strong>
+                            </div>
+                            <div class="period-row">
+                                <span>Monthly:</span>
+                                <strong>Costs: <span id="monthly-costs">$0.00</span></strong>
+                                <strong>Aid: <span id="monthly-aid">$0.00</span></strong>
+                                <strong>Net: <span id="monthly-refund" class="highlight-text">$0.00</span></strong>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2 -->
+            <section class="step-card fade-in" id="step2">
+                <h2>How to find all of your debts</h2>
+
+                <div class="sub-step">
+                    <h3>1. Go to StudentAid.gov</h3>
+                    <p>Go to <a href="http://Studentaid.gov" target="_blank">Studentaid.gov</a>.</p>
+                    <p>Click “Log in” (top right) and log in using your FAFSA ID (email + password).</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>2. Go to your dashboard</h3>
+                    <p>After logging in, click “My Aid” from the top menu or click “View Details” on your dashboard.</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>3. View your loans</h3>
+                    <p>On the My Aid page, scroll down. You will see: Loan Type (Subsidized / Unsubsidized / PLUS,
+                        etc.),
+                        Loan Status, Loan Amount, and Total balance.</p>
+                    <p>Click “View Breakdown” to see details.</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>4. Take Screenshot</h3>
+                    <p>They want a screenshot showing Your name (if required), Total loan balance, and List of loans.
+                    </p>
+                    <div class="os-instructions">
+                        <div class="os-box">
+                            <strong>On Mac:</strong>
+                            <code>Command + Shift + 4</code>
+                        </div>
+                        <div class="os-box">
+                            <strong>On Windows:</strong>
+                            <code>Windows + Shift + S</code>
+                        </div>
+                    </div>
+                    <p>Save the screenshot and submit it.</p>
+                </div>
+            </section>
+
+            <!-- Step 6 -->
+            <section class="step-card fade-in" id="step6">
+                <h2>Debt Snowball Calculator</h2>
+                <p>This calculator helps you organize your debts and see your total monthly payments. List your debts
+                    from
+                    smallest to largest balance to follow the snowball method. You can also include any loans you are
+                    thinking of taking out as well.</p>
+
+                <div class="financial-aid-container">
+                    <!-- Debt List -->
+                    <div class="sheet-section costs-section">
+                        <h3>Your Debts</h3>
+                        <div class="sheet-headers" style="display:flex; gap:12px; padding:0;">
+                            <div class="col-name" style="flex:1;">Loan/Debt Name</div>
+                            <div style="width:110px; font-weight:600; font-size:0.8rem; text-transform:uppercase;">Type
+                            </div>
+                            <div
+                                style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
+                                Balance ($)</div>
+                            <div
+                                style="width:80px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
+                                Rate (%)</div>
+                            <div
+                                style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
+                                Mo. Usage ($)</div>
+                            <div
+                                style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
+                                Actual Pay ($)</div>
+                            <div style="width:30px;"></div>
+                        </div>
+
+                        <div id="debt-list" class="sheet-list"></div>
+                        <button class="add-btn" onclick="addDebtItem()">+ Add Debt</button>
+                    </div>
+
+                    <!-- Debt Summary -->
+                    <div class="aid-totals-section">
+                        <h3>Debt Summary</h3>
+                        <div class="aid-summary-grid">
+                            <div class="aid-summary-card">
+                                <div class="card-label">Total Debt</div>
+                                <div class="card-value" id="total-debt">$0.00</div>
+                            </div>
+                            <div class="aid-summary-card">
+                                <div class="card-label">Total Monthly Payments</div>
+                                <div class="card-value" id="total-payments">$0.00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payoff Timeline -->
+                    <div class="aid-totals-section" style="margin-top: 24px;">
+                        <h3>5-Year Payoff Timeline</h3>
+                        <p style="text-align: center; margin-bottom: 16px; color: var(--text-muted);">See how only
+                            making
+                            the minimum payments causes interest to explode compared to paying off more than the
+                            minimum.
+                        </p>
+
+                        <div class="step5-table-wrapper" style="padding: 16px; background: var(--surface);">
+                            <canvas id="snowballChart"></canvas>
+                        </div>
+
+                        <div class="aid-summary-grid" style="margin-top: 24px;">
+                            <div class="aid-summary-card">
+                                <div class="card-label">Total Interest (Min)</div>
+                                <div class="card-value" id="total-interest-min" style="color: var(--danger)">$0.00</div>
+                            </div>
+                            <div class="aid-summary-card">
+                                <div class="card-label">Total Interest (Actual)</div>
+                                <div class="card-value" id="total-interest-act" style="color: var(--primary)">$0.00
+                                </div>
+                            </div>
+                            <div class="aid-summary-card"
+                                style="background: var(--success-light); border: 1px solid var(--success);">
+                                <div class="card-label" style="color: var(--success)">Interest Saved</div>
+                                <div class="card-value" id="total-saved" style="color: var(--success)">$0.00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Debt Strategy Tip -->
+                    <div style="margin-top: 32px;">
+                        <div class="aid-summary-card"
+                            style="text-align: left; background: var(--surface); border: 1px solid var(--border);">
+                            <h3 style="margin-top: 0; color: var(--primary); font-size: 1.25rem;">Debt Snowball vs. Debt
+                                Avalanche</h3>
+                            <p style="margin-bottom: 12px; font-size: 0.95rem; color: var(--text-muted);">There are two
+                                popular strategies to pay off debt while continuing to make the minimum payments on
+                                everything:</p>
+                            <ul
+                                style="margin-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+                                <li style="margin-bottom: 8px;"><strong>Debt Snowball (Focus on Morale):</strong> Put
+                                    any
+                                    extra money toward the debt with the <strong>smallest balance</strong> first. This
+                                    gives
+                                    you quick wins by eliminating individual debts faster, building momentum to stay
+                                    motivated!</li>
+                                <li><strong>Debt Avalanche (Focus on Math):</strong> Put extra money toward the debt
+                                    with
+                                    the <strong>highest interest rate</strong> first. This saves you the most money on
+                                    interest overall, but it can take significantly longer before you see an individual
+                                    debt
+                                    wiped out.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 8 -->
+            <section class="step-card fade-in" id="step8">
+                <h2>Credit Card Usage</h2>
+
+                <p>Credit cards can be helpful if used responsibly. They can help you build credit, which is crucial for
+                    renting apartments, buying a car, or getting loans later in life. Additionally, credit cards can
+                    give
+                    you rewards that can actually make you money just
+                    by buying the things you were already paying for! Here are some tips to stay aware of your credit
+                    card
+                    usage:</p>
+
+                <div class="sub-step">
+                    <h3>Tip 1 – Only spend what you can pay back</h3>
+                    <p>Treat your credit card like a debit card. Only spend money you already have.</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>Tip 2 – Pay your balance every month</h3>
+                    <p>Pay the full balance each month to avoid interest charges.</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>Tip 3 – Keep your credit usage low</h3>
+
+                    <p>Keep your credit usage below 30% of your credit limit. This means if you have a credit limit of
+                        $1,000, you should keep your balance below $300 every month.</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>Tip 4 – Avoid unnecessary debt</h3>
+                    <p>Credit cards should be used carefully as they carry high interest rates as shown above in the
+                        debt
+                        snowball calculator. Avoid using them for things you cannot afford.</p>
+                </div>
+
+                <div class="cc-widgets">
+                    <h3>Recommended Cards for Beginners & Students</h3>
+                    <div class="cc-grid">
+                        <a href="https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited" target="_blank"
+                            class="cc-card">
+                            <div class="cc-tag">Good for Beginners</div>
+                            <h4>Chase Freedom Unlimited®</h4>
+                            <div class="cc-details">
+                                <p><strong>Rewards:</strong> 1.5% Cash Back on all purchases, higher rates on travel,
+                                    dining, and drugstores.</p>
+                                <p><strong>Annual Fee:</strong> $0</p>
+                            </div>
+                            <div class="cc-btn">Learn More & Apply</div>
+                        </a>
+
+                        <a href="https://www.discover.com/credit-cards/student-credit-card/it-card.html?ICMPGN=ALL_CC_STUDENT_IT_CARD"
+                            target="_blank" class="cc-card">
+                            <div class="cc-tag">Best for Students</div>
+                            <h4>Discover it® Student Cash Back</h4>
+                            <div class="cc-details">
+                                <p><strong>Rewards:</strong> 5% Cash Back on everyday purchases at different places each
+                                    quarter up to the quarterly maximum.</p>
+                                <p><strong>Annual Fee:</strong> $0</p>
+                            </div>
+                            <div class="cc-btn">Learn More & Apply</div>
+                        </a>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Step 7 -->
+            <section class="step-card fade-in" id="step7">
+                <h2>Balance Sheet</h2>
+                <p>A balance sheet shows your financial position by comparing what you own (Assets) and what you owe
+                    (Liabilities).</p>
+                <div style="margin: 16px 0;">
+                    <code>Assets – Liabilities = Net Worth</code>
+                </div>
+                <p>If the number is positive, you own more than you owe.</p>
+
+                <div class="financial-aid-container" style="margin-top: 24px;">
+                    <div class="aid-grid">
+                        <!-- Assets Section -->
+                        <div class="sheet-section aid-section">
+                            <h3>Assets (What you own)</h3>
+                            <div class="sheet-headers" style="display:flex; gap:12px; padding:0;">
+                                <div class="col-name" style="flex:1;">Asset Name</div>
+                                <div
+                                    style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
+                                    Value ($)</div>
+                                <div
+                                    style="width:80px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
+                                    APR (%)</div>
+                                <div style="width:30px;"></div>
+                            </div>
+                            <div id="assets-list" class="sheet-list"></div>
+                            <button class="add-btn" onclick="addBSItem('assets')">+ Add Asset</button>
+                        </div>
+
+                        <!-- Liabilities Section -->
+                        <div class="sheet-section costs-section">
+                            <h3>Liabilities (What you owe)</h3>
+                            <div class="sheet-headers" style="display:flex; gap:12px; padding:0;">
+                                <div class="col-name" style="flex:1;">Liability Name</div>
+                                <div
+                                    style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
+                                    Amount ($)</div>
+                                <div
+                                    style="width:80px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
+                                    APR (%)</div>
+                                <div style="width:30px;"></div>
+                            </div>
+                            <div id="liabilities-list" class="sheet-list"></div>
+                            <button class="add-btn" onclick="addBSItem('liabilities')">+ Add Liability</button>
+                        </div>
+                    </div>
+
+                    <div class="aid-totals-section" style="margin-top: 24px;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <h3 style="margin: 0;">Net Worth Summary</h3>
+                            <button onclick="exportBalanceSheetCSV()"
+                                style="background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background 0.2s;">
+                                Download CSV
+                            </button>
+                        </div>
+
+                        <div class="aid-summary-grid">
+                            <div class="aid-summary-card">
+                                <div class="card-label">Total Assets</div>
+                                <div class="card-value" id="bs-total-assets" style="color: var(--success)">$0.00</div>
+                            </div>
+                            <div class="aid-summary-card">
+                                <div class="card-label">Total Liabilities</div>
+                                <div class="card-value" id="bs-total-liabilities" style="color: var(--danger)">$0.00
+                                </div>
+                            </div>
+                            <div class="aid-summary-card" id="bs-net-worth-card"
+                                style="background: var(--surface); border: 1px solid var(--border);">
+                                <div class="card-label" id="bs-net-worth-label">Net Worth</div>
+                                <div class="card-value" id="bs-net-worth">$0.00</div>
+                            </div>
+                        </div>
+
+                        <h3 style="margin: 24px 0 16px 0;">Estimated Annual Impact</h3>
+                        <div class="aid-summary-grid">
+                            <div class="aid-summary-card">
+                                <div class="card-label">Est. Asset Growth /yr</div>
+                                <div class="card-value" id="bs-annual-growth" style="color: var(--success)">+$0.00</div>
+                            </div>
+                            <div class="aid-summary-card">
+                                <div class="card-label">Est. Liability Cost /yr</div>
+                                <div class="card-value" id="bs-annual-loss" style="color: var(--danger)">-$0.00</div>
+                            </div>
+                            <div class="aid-summary-card">
+                                <div class="card-label">Net Annual Change</div>
+                                <div class="card-value" id="bs-annual-net">$0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 9 -->
+            <section class="step-card fade-in" id="step9">
+                <h2>Short-Term Goals vs Long-Term Goals</h2>
+
+                <p>Understanding what is important to you financially can help you make better spending decisions.</p>
+
+                <div class="sub-step">
+                    <h3>Short-Term Goals</h3>
+                    <p>These are things you want to achieve soon, usually within the next year.</p>
+                    <ul>
+                        <li>Saving for a trip</li>
+                        <li>Buying a laptop</li>
+                        <li>Building a small emergency fund</li>
+                    </ul>
+                </div>
+
+                <div class="sub-step">
+                    <h3>Long-Term Goals</h3>
+                    <p>These goals take several years to achieve.</p>
+                    <ul>
+                        <li>Paying off student loans</li>
+                        <li>Saving for a house</li>
+                        <li>Investing for retirement</li>
+                    </ul>
+                </div>
+
+                <div class="sub-step">
+                    <h3>Why this matters</h3>
+                    <p>Knowing your goals helps you decide where your money should go each month.</p>
+                </div>
+
+            </section>
+
+            <!-- Step 10 -->
+            <section class="step-card fade-in" id="step10">
+                <h2>The Importance of Investing</h2>
+
+                <p>Investing allows your money to grow over time instead of just sitting in a bank account.</p>
+
+                <div class="sub-step">
+                    <h3>Why investing matters</h3>
+                    <p>When you invest, your money can grow through compound interest and market returns.</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>Start early</h3>
+                    <p>Even small amounts invested regularly can grow significantly over many years.</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>Common beginner investments</h3>
+                    <ul>
+                        <li style="margin-bottom: 12px;"><strong>Index funds:</strong> A type of mutual fund that tracks
+                            a specific market index (like the S&P 500) to provide broad market exposure.</li>
+                        <li style="margin-bottom: 12px;"><strong>ETFs (Exchange-Traded Funds):</strong> Similar to index
+                            funds, but traded on a stock exchange like individual stocks throughout the trading day.
+                        </li>
+                        <li style="margin-bottom: 12px;"><strong>Retirement accounts:</strong> Tax-advantaged accounts
+                            like a 401(k) or IRA (Individual Retirement Account) designed specifically to help you save
+                            for the long term.</li>
+                    </ul>
+                </div>
+
+                <p>Investing early gives your money more time to grow.</p>
+
+            </section>
+
+            <!-- Step 12 -->
+            <section class="step-card fade-in" id="step12">
+                <h2>HYSA and Tax-Advantaged Accounts</h2>
+
+                <p>Different types of financial accounts can help your money grow faster or reduce taxes.</p>
+
+                <div class="sub-step">
+                    <h3>High-Yield Savings Account (HYSA)</h3>
+                    <p>A HYSA offers a higher interest rate than a regular savings account, helping your savings grow
+                        faster
+                        while still being easy to access.</p>
+                </div>
+
+                <div class="sub-step">
+                    <h3>Tax-Advantaged Accounts</h3>
+                    <p>These accounts offer tax benefits and are commonly used for long-term savings.</p>
+                    <ul>
+                        <li>Roth IRA</li>
+                        <li>401(k)</li>
+                        <li>Health Savings Accounts (HSA)</li>
+                    </ul>
+                </div>
+
+                <div class="sub-step">
+                    <h3>Why they matter</h3>
+                    <p>Using the right accounts can help you save more money over time and reduce taxes.</p>
+                </div>
+
+                <div class="cc-widgets">
+                    <h3>Recommended Savings & Retirement Accounts</h3>
+                    <div class="cc-grid">
+                        <a href="https://www.capitalone.com/bank/savings-accounts/online-performance-savings-account/"
+                            target="_blank" class="cc-card">
+                            <div class="cc-tag">Top HYSA Pick</div>
+                            <h4>Capital One 360 Performance Savings</h4>
+                            <div class="cc-details">
+                                <p><strong>Benefits:</strong> No monthly fees, no minimums, and a highly competitive
+                                    Annual
+                                    Percentage Yield (APY) to help your money grow faster.</p>
+                            </div>
+                            <div class="cc-btn">Learn More & Apply</div>
+                        </a>
+
+                        <a href="https://www.fidelity.com/retirement/roth-ira" target="_blank" class="cc-card">
+                            <div class="cc-tag">Top Roth IRA Pick</div>
+                            <h4>Fidelity Roth IRA</h4>
+                            <div class="cc-details">
+                                <p><strong>Benefits:</strong> $0 account fees, zero minimums, and access to zero expense
+                                    ratio index funds. Maximize your long-term wealth with tax-free growth.</p>
+                            </div>
+                            <div class="cc-btn">Learn More & Apply</div>
+                        </a>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Quiz Section -->
+            <section class="step-card fade-in" id="quiz" style="margin-top: 32px;">
+                <h2>Knowledge Check</h2>
+                <p style="margin-bottom: 24px;">Ready to see what you've learned? Check your understanding with this
+                    quick
+                    quiz!</p>
+
+                <div
+                    style="width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: var(--surface);">
+                    <iframe
+                        src="https://docs.google.com/forms/d/e/1FAIpQLSf3oodwZlogyIRr9F0K0BKTOrfwjlLCDxmGEniWra8PwYj7Fg/viewform?embedded=true"
+                        width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0"
+                        style="display: block; border: none;">Loading…</iframe>
+                </div>
+            </section>
+
+        </main>
+    </div>
 
     <footer>
         <div class="container">

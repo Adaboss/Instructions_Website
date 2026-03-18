@@ -18,6 +18,9 @@
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    --highlight-color: rgba(79, 70, 229, 0.2);
+    --highlight-text: var(--primary);
 }
 
 [data-theme="dark"] {
@@ -34,6 +37,68 @@
     --warning-light: rgba(245, 158, 11, 0.2);
     --danger: #EF4444;
     --danger-light: rgba(239, 68, 68, 0.2);
+
+    --highlight-color: rgba(129, 140, 248, 0.3);
+    --highlight-text: #ffffff;
+}
+
+/* Audio Player */
+.audio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.audio-btn:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    background: rgba(79, 70, 229, 0.05);
+}
+
+.audio-btn.playing {
+    color: var(--primary);
+    border-color: var(--primary);
+    animation: pulse-border 2s infinite;
+}
+
+[data-theme="dark"] .audio-btn:hover {
+    background: rgba(129, 140, 248, 0.1);
+}
+
+@keyframes pulse-border {
+    0% {
+        box-shadow: 0 0 0 0 rgba(129, 140, 248, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(129, 140, 248, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(129, 140, 248, 0);
+    }
+}
+
+.audio-phrase {
+    border-radius: 4px;
+    padding: 2px 4px;
+    margin: 0 -4px;
+    transition: all 0.2s ease;
+}
+
+.audio-phrase.audio-active {
+    background-color: var(--highlight-color);
+    color: var(--highlight-text);
+    font-weight: 500;
 }
 
 * {
@@ -122,12 +187,72 @@ body {
     font-size: 0.95rem;
 }
 
-/* Main content */
-main {
+/* Layout */
+.layout-wrapper {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
     padding: 40px 0;
+}
+
+.sidebar {
+    position: sticky;
+    top: 100px;
+    width: 250px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+}
+
+.sidebar h3 {
+    margin-bottom: 16px;
+    font-size: 1.25rem;
+    color: var(--primary);
+}
+
+.sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sidebar a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.sidebar a:hover {
+    color: var(--primary);
+}
+
+/* Main content */
+.main-content {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 32px;
+    min-width: 0;
+}
+
+@media (max-width: 900px) {
+    .layout-wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        margin-bottom: 24px;
+    }
 }
 
 .step-card {

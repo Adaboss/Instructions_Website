@@ -1,3 +1,86 @@
+// Audio playback state
+let currentAudio = null;
+let audioUpdateInterval = null;
+
+window.playGuideAudio = function (sectionId, audioPath) {
+    const btn = document.getElementById('btn-audio-' + sectionId);
+    if (!btn) return;
+
+    // If currently playing the same audio, stop it
+    if (currentAudio && currentAudio.src.endsWith(audioPath) && !currentAudio.paused) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        clearInterval(audioUpdateInterval);
+        resetHighlighting();
+        updateBtnState(btn, false);
+        return;
+    }
+
+    // Stop any existing audio
+    if (currentAudio) {
+        currentAudio.pause();
+        clearInterval(audioUpdateInterval);
+        resetHighlighting();
+        // Reset all buttons to default state
+        document.querySelectorAll('.audio-btn').forEach(b => updateBtnState(b, false));
+    }
+
+    // Play new audio
+    currentAudio = new Audio(audioPath);
+
+    currentAudio.addEventListener('ended', () => {
+        clearInterval(audioUpdateInterval);
+        resetHighlighting();
+        updateBtnState(btn, false);
+    });
+
+    currentAudio.play();
+    updateBtnState(btn, true);
+
+    // Setup highlighting interval
+    const textContainer = document.getElementById('text-' + sectionId);
+    if (textContainer) {
+        const phrases = textContainer.querySelectorAll('.audio-phrase');
+        audioUpdateInterval = setInterval(() => {
+            const currentTime = currentAudio.currentTime;
+
+            phrases.forEach(phrase => {
+                const start = parseFloat(phrase.getAttribute('data-start'));
+                const end = parseFloat(phrase.getAttribute('data-end'));
+
+                if (currentTime >= start && currentTime < end) {
+                    phrase.classList.add('audio-active');
+                } else {
+                    phrase.classList.remove('audio-active');
+                }
+            });
+        }, 100);
+    }
+}
+
+function updateBtnState(btn, isPlaying) {
+    if (isPlaying) {
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="6" y="4" width="4" height="16"></rect>
+                            <rect x="14" y="4" width="4" height="16"></rect>
+                        </svg> Stop`;
+        btn.classList.add('playing');
+    } else {
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                        </svg> Listen`;
+        btn.classList.remove('playing');
+    }
+}
+
+function resetHighlighting() {
+    document.querySelectorAll('.audio-phrase').forEach(el => {
+        el.classList.remove('audio-active');
+    });
+}
+
 // Initial data from the Excel template
 let needs = [
     { id: 1, name: 'Rent', cost: 510.0 },
@@ -256,7 +339,7 @@ function calculateAidTotals() {
     // Update main summary cards (we'll show semesterly by default for the big cards)
     aidTotalCosts.textContent = `$${semesterCosts.toFixed(2)}`;
     aidTotalAid.textContent = `$${semesterAid.toFixed(2)}`;
-    aidTotalRefund.textContent = `$${semesterRefund.toFixed(2)}`;
+    aidTotalRefund.textContent = semesterRefund < 0 ? `-$${Math.abs(semesterRefund).toFixed(2)}` : `$${semesterRefund.toFixed(2)}`;
 
     // Manage negative refund text colors (if negative, it's a balance due)
     if (semesterRefund < 0) {
@@ -268,17 +351,17 @@ function calculateAidTotals() {
     // Update breakdowns
     annCosts.textContent = `$${annualCosts.toFixed(2)}`;
     annAid.textContent = `$${annualAid.toFixed(2)}`;
-    annRefund.textContent = `$${annualRefund.toFixed(2)}`;
+    annRefund.textContent = annualRefund < 0 ? `-$${Math.abs(annualRefund).toFixed(2)}` : `$${annualRefund.toFixed(2)}`;
     annRefund.style.color = annualRefund < 0 ? 'var(--danger)' : 'var(--primary)';
 
     semCosts.textContent = `$${semesterCosts.toFixed(2)}`;
     semAid.textContent = `$${semesterAid.toFixed(2)}`;
-    semRefund.textContent = `$${semesterRefund.toFixed(2)}`;
+    semRefund.textContent = semesterRefund < 0 ? `-$${Math.abs(semesterRefund).toFixed(2)}` : `$${semesterRefund.toFixed(2)}`;
     semRefund.style.color = semesterRefund < 0 ? 'var(--danger)' : 'var(--primary)';
 
     monCosts.textContent = `$${monthlyCosts.toFixed(2)}`;
     monAid.textContent = `$${monthlyAid.toFixed(2)}`;
-    monRefund.textContent = `$${monthlyRefund.toFixed(2)}`;
+    monRefund.textContent = monthlyRefund < 0 ? `-$${Math.abs(monthlyRefund).toFixed(2)}` : `$${monthlyRefund.toFixed(2)}`;
     monRefund.style.color = monthlyRefund < 0 ? 'var(--danger)' : 'var(--primary)';
 }
 

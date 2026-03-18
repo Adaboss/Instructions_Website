@@ -131,7 +131,7 @@
                 <!-- Spreadsheet Component -->
                 <div class="spreadsheet-container">
                     <div class="allowance-input">
-                        <label for="monthly-allowance">Monthly Allowance ($)</label>
+                        <label for="monthly-allowance">Monthly Allowance From Step 1 ($)</label>
                         <input type="number" id="monthly-allowance" placeholder="e.g. 1500" value="1500" step="0.01">
                     </div>
 
@@ -267,7 +267,8 @@
             <!-- Step 5 -->
             <section class="step-card fade-in" id="step5">
                 <h2>Cost of College Calculator</h2>
-                <p>Calculate your exact costs versus your financial aid. This will help you determine your true out-of-pocket cost of college, or any potential refund you may receive.</p>
+                <p>Calculate your exact costs versus your financial aid. This will help you determine your true
+                    out-of-pocket cost of college, or any potential refund you may receive.</p>
 
                 <div class="financial-aid-container">
                     <div class="aid-grid">
@@ -366,22 +367,7 @@
                     <p>Click “View Breakdown” to see details.</p>
                 </div>
 
-                <div class="sub-step">
-                    <h3>4. Take Screenshot</h3>
-                    <p>They want a screenshot showing Your name (if required), Total loan balance, and List of loans.
-                    </p>
-                    <div class="os-instructions">
-                        <div class="os-box">
-                            <strong>On Mac:</strong>
-                            <code>Command + Shift + 4</code>
-                        </div>
-                        <div class="os-box">
-                            <strong>On Windows:</strong>
-                            <code>Windows + Shift + S</code>
-                        </div>
-                    </div>
-                    <p>Save the screenshot and submit it.</p>
-                </div>
+
             </section>
 
             <!-- Step 6 -->
@@ -408,7 +394,10 @@
                                 Rate (%)</div>
                             <div
                                 style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
-                                Mo. Usage ($)</div>
+                                <span class="tooltip-wrapper">Mo. Usage ($)<span class="tooltip-text"
+                                        style="text-transform:none;">The recurring amount of money added to a balance
+                                        each month.</span></span>
+                            </div>
                             <div
                                 style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
                                 Actual Pay ($)</div>
@@ -513,7 +502,9 @@
 
                 <div class="sub-step">
                     <h3>Tip 2 – Pay your balance every month</h3>
-                    <p>Pay the full balance each month to avoid interest charges.</p>
+                    <p>Pay the full balance each month to avoid <span class="tooltip-wrapper">interest<span
+                                class="tooltip-text">The cost of borrowing money, or the money earned on savings,
+                                typically expressed as a percentage.</span></span> charges.</p>
                 </div>
 
                 <div class="sub-step">
@@ -582,8 +573,8 @@
                                     style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
                                     Value ($)</div>
                                 <div
-                                    style="width:80px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
-                                    APR (%)</div>
+                                    style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
+                                    <span class="tooltip-wrapper">APR/APY (%)<span class="tooltip-text" style="text-transform:none;"><strong>APR (Annual Percentage Rate)</strong> is the true yearly cost to borrow money.<br><br><strong>APY (Annual Percentage Yield)</strong> is the true yearly interest you earn on an investment.</span></span></div>
                                 <div style="width:30px;"></div>
                             </div>
                             <div id="assets-list" class="sheet-list"></div>
@@ -599,8 +590,8 @@
                                     style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
                                     Amount ($)</div>
                                 <div
-                                    style="width:80px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
-                                    APR (%)</div>
+                                    style="width:100px; text-align:right; font-weight:600; font-size:0.8rem; text-transform:uppercase;">
+                                    <span class="tooltip-wrapper">APR/APY (%)<span class="tooltip-text" style="text-transform:none;"><strong>APR (Annual Percentage Rate)</strong> is the true yearly cost to borrow money.<br><br><strong>APY (Annual Percentage Yield)</strong> is the true yearly interest you earn on an investment.</span></span></div>
                                 <div style="width:30px;"></div>
                             </div>
                             <div id="liabilities-list" class="sheet-list"></div>
@@ -706,13 +697,15 @@
                 <div class="sub-step">
                     <h3>Common beginner investments</h3>
                     <ul>
-                        <li style="margin-bottom: 12px;"><strong>Index funds:</strong> A type of mutual fund that tracks
+                        <li style="margin-bottom: 12px;"><strong>Index <span class="tooltip-wrapper">funds<span
+                                        class="tooltip-text" style="text-transform:none;">Pools of money allocated for a
+                                        specific purpose, often invested collectively to earn
+                                        returns.</span></span>:</strong> A type of <span class="tooltip-wrapper">mutual fund<span class="tooltip-text" style="text-transform:none;">A professionally managed investment fund that pools money from many investors to purchase securities.</span></span> that tracks
                             a specific market index (like the S&P 500) to provide broad market exposure.</li>
-                        <li style="margin-bottom: 12px;"><strong>ETFs (Exchange-Traded Funds):</strong> Similar to index
-                            funds, but traded on a stock exchange like individual stocks throughout the trading day.
+                        <li style="margin-bottom: 12px;"><strong><span class="tooltip-wrapper">ETFs<span class="tooltip-text" style="text-transform:none;">Exchange-Traded Fund: A type of investment fund that is traded on a stock exchange.</span></span> (Exchange-Traded Funds):</strong> Similar to <span class="tooltip-wrapper">index funds<span class="tooltip-text" style="text-transform:none;">Pools of money managed to track the performance of a financial market index.</span></span>, but traded on a stock exchange like individual stocks throughout the trading day.
                         </li>
                         <li style="margin-bottom: 12px;"><strong>Retirement accounts:</strong> Tax-advantaged accounts
-                            like a 401(k) or IRA (Individual Retirement Account) designed specifically to help you save
+                            like a <span class="tooltip-wrapper">401(k)<span class="tooltip-text" style="text-transform:none;">An employer-sponsored retirement savings plan that lets employees save and invest a piece of their paycheck before taxes are taken out.</span></span> or <span class="tooltip-wrapper">IRA<span class="tooltip-text" style="text-transform:none;">An Individual Retirement Account offering tax-free growth and tax-free withdrawals in retirement.</span></span> (Individual Retirement Account) designed specifically to help you save
                             for the long term.</li>
                     </ul>
                 </div>
@@ -738,9 +731,9 @@
                     <h3>Tax-Advantaged Accounts</h3>
                     <p>These accounts offer tax benefits and are commonly used for long-term savings.</p>
                     <ul>
-                        <li>Roth IRA</li>
-                        <li>401(k)</li>
-                        <li>Health Savings Accounts (HSA)</li>
+                        <li style="margin-bottom: 8px;"><span class="tooltip-wrapper">Roth IRA<span class="tooltip-text" style="text-transform:none;">An individual retirement account (IRA) offering tax-free growth and tax-free withdrawals in retirement, funded with after-tax dollars.</span></span></li>
+                        <li style="margin-bottom: 8px;"><span class="tooltip-wrapper">401(k)<span class="tooltip-text" style="text-transform:none;">An employer-sponsored retirement savings plan that lets employees save and invest a piece of their paycheck before taxes are taken out.</span></span></li>
+                        <li><span class="tooltip-wrapper">Health Savings Accounts (HSA)<span class="tooltip-text" style="text-transform:none;">A tax-advantaged account for people with a high-deductible health plan, used to save and pay for qualified medical expenses tax-free.</span></span></li>
                     </ul>
                 </div>
 
@@ -759,7 +752,11 @@
                             <div class="cc-details">
                                 <p><strong>Benefits:</strong> No monthly fees, no minimums, and a highly competitive
                                     Annual
-                                    Percentage Yield (APY) to help your money grow faster.</p>
+                                    Percentage Yield (<span class="tooltip-wrapper">APY<span class="tooltip-text"
+                                            style="text-transform:none;">Annual Percentage Yield: The real rate of
+                                            return earned on a savings deposit or investment taking into account the
+                                            effect of compounding interest.</span></span>) to help your money grow
+                                    faster.</p>
                             </div>
                             <div class="cc-btn">Learn More & Apply</div>
                         </a>
@@ -799,6 +796,8 @@
 
     <footer>
         <div class="container">
+            <p style="margin-bottom: 8px;">Disclaimer: None of the links provided on this website are affiliate links,
+                and no advertising is being done by displaying them. They are purely for educational purposes.</p>
             <p>&copy; 2026 Personal Finance Guide. All rights reserved.</p>
         </div>
     </footer>
